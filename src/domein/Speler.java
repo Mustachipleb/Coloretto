@@ -4,6 +4,10 @@ import java.util.*;
 
 public class Speler {
 
-	private Collection<Kaart> kaartenInBezit;
-	private int naam;
+	private Collection<Kaart> spelerKaarten;
+
+	private String spelerNaam;
+
+	private int spelerRank;
+
 }
