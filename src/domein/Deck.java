@@ -1,11 +1,9 @@
 package domein;
 
+import java.util.*;
+
 public class Deck {
 
-private Speler huidigeSpeler;
-
-private String deckName;
-
-private Collection<Kaart> deckKaarten;
-
+	private Deque<Kaart> kaarten;
+	private Speler eigenaar;
 }
