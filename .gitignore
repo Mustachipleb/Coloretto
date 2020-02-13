@@ -12,3 +12,4 @@ local.properties
 vpproject/.vpprefdata
 vpproject/tmp
 vpproject/.lock
+.vp
