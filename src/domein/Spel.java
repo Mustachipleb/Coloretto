@@ -18,7 +18,7 @@ public class Spel {
 	/**
 	 * Constructor
 	 */
-	public Spel Spel() {
+	public Spel(int aantalSpelers) {
 		throw new UnsupportedOperationException();
 	}
 }
