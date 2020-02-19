@@ -8,17 +8,45 @@ public class Spel {
 	private Deck startDeck;
 	private Ronde huidigeRonde;
 
-	/**
-	 * Start een nieuwe Ronde: Bepaal spelers en voer de initilisatie van een Ronde uit (Lijst van spelregels om een ronde te spelen) en andere operaties.
-	 */
-	public Ronde StartNieuweRonde(SpelRegel[] spelRegels) {
-		throw new UnsupportedOperationException();
-	}
+	private Speler spelerAanBeurt;
 
 	/**
 	 * Constructor
 	 */
-	public Spel Spel() {
+	public Spel() {
+		this.startDeck = new Deck(63);
+	}
+
+	public void maakSpelersAan(int aantalSpelers, String[] namen) {
+		spelers = new ArrayList<Speler>();
+		for (int i = 0; i < aantalSpelers; i++)
+		{
+			Speler s = new Speler(namen[i]);
+			spelers.add(s);
+		}
+	}
+
+	public ArrayList<ArrayList<Kaart>> getKaartenSpelers() {
+		ArrayList<ArrayList<Kaart>> kaartenSpelers = new ArrayList<ArrayList<Kaart>>();
+		for (int i = 0; i < spelers.size(); i++)
+		{
+			for (int j = 0; j < spelers.get(i).getKaarten().size(); j++)
+			{
+				kaartenSpelers.add(spelers.get(i).getKaarten());
+			}
+		}
+		return kaartenSpelers;
+	}
+
+	public Speler getSpelerAanBeurt() {
+		return this.spelerAanBeurt;
+	}
+
+	public void speelSpel() {
+		throw new UnsupportedOperationException();
+	}
+
+	public void speelBeurt(String actie) {
 		throw new UnsupportedOperationException();
 	}
 }
