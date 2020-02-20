@@ -22,25 +22,31 @@ public class DomeinController {
 	public ArrayList<ArrayList<String>> getKaartenSpelers() {
 		ArrayList<ArrayList<Kaart>> kaartenPerSpeler = spel.getKaartenSpelers();
 		ArrayList<ArrayList<String>> kleurKaartenPerSpeler = new ArrayList<ArrayList<String>>();
-		for (ArrayList<Kaart> kaarten : kaartenPerSpeler)
+
+		// Deze nested loop gaat over elke Kaart per Speler, en zet de kaarten om naar hun kleur als String.
+		for (int i = 0; i < kaartenPerSpeler.size(); i++)
 		{
-			List<String> kleurKaarten = kaarten.stream()
-				    .map(Kaart::getKleur)
-				    .collect(Collectors.toList());
-			kleurKaartenPerSpeler.add((ArrayList<String>)kleurKaarten);
+			ArrayList<String> kleurKaarten = new ArrayList<String>();
+			for (int j = 0; j < kaartenPerSpeler.get(i).size(); j++)
+			{
+				Kaart kaart = kaartenPerSpeler.get(i).get(j);
+				kleurKaarten.add(kaart.getKleur());
+			}
+			kleurKaartenPerSpeler.add(kleurKaarten);
 		}
+		
 		return kleurKaartenPerSpeler;
 	}
 
 	public String getSpelerAanBeurt() {
-		throw new UnsupportedOperationException();
+		return spel.getSpelerAanBeurt().getNaam();
 	}
 
 	public void speelSpel() {
-		throw new UnsupportedOperationException();
+		spel.speelSpel();
 	}
 
 	public void speelBeurt(String actie) {
-		throw new UnsupportedOperationException();
+		spel.speelBeurt(actie);
 	}
 }

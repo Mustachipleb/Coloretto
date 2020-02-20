@@ -19,11 +19,14 @@ public class Spel {
 
 	public void maakSpelersAan(int aantalSpelers, String[] namen) {
 		spelers = new ArrayList<Speler>();
+		Random rnd = new Random();
+		
 		for (int i = 0; i < aantalSpelers; i++)
 		{
 			Speler s = new Speler(namen[i]);
 			spelers.add(s);
 		}
+		setSpelerAanBeurt(spelers.get(rnd.nextInt(aantalSpelers)));
 	}
 
 	public ArrayList<ArrayList<Kaart>> getKaartenSpelers() {
@@ -42,11 +45,22 @@ public class Spel {
 		return this.spelerAanBeurt;
 	}
 
-	public void speelSpel() {
-		throw new UnsupportedOperationException();
+	private void setSpelerAanBeurt(Speler spelerAanBeurt) {
+		this.spelerAanBeurt = spelerAanBeurt;
 	}
 
-	public void speelBeurt(String actie) {
-		throw new UnsupportedOperationException();
+	public void speelSpel() {
+		this.huidigeRonde = new Ronde();
+	}
+
+	public void speelBeurt(String actie, int stapelNummer) {
+		if (actie.equals("leggen"))
+		{
+			this.huidigeRonde.legKaartBijStapel(stapelNummer);
+		}
+		else if (actie.equals("nemen"))
+		{
+			this.huidigeRonde.neemStapel(stapelNummer);
+		}
 	}
 }
