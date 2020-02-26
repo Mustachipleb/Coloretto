@@ -1,14 +1,14 @@
 package domein;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DomeinController {
 
 	Spel spel;
 
-	public void startSpel(int aantalSpelers) {
-		throw new UnsupportedOperationException();
+	public DomeinController() 
+	{
+		
 	}
 
 	public void startNieuwSpel() {
@@ -46,7 +46,11 @@ public class DomeinController {
 		spel.speelSpel();
 	}
 
-	public void speelBeurt(String actie) {
-		spel.speelBeurt(actie);
+	public void speelBeurt(String actie, int stapelNummer) {
+		spel.speelBeurt(actie, stapelNummer);
+	}
+	
+	public boolean isLaatsteBeurt() {
+		return spel.isLaatsteBeurt();
 	}
 }

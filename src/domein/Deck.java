@@ -25,4 +25,13 @@ public class Deck {
 		}
 		Collections.shuffle(kaarten);
 	}
+	
+	public boolean isVol() {
+		boolean isVol = false;
+		if (kaarten.size() == maxAantalKaarten) 
+		{
+			isVol = true;
+		}
+		return isVol;
+	}
 }

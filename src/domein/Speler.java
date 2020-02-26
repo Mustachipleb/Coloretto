@@ -8,8 +8,6 @@ public class Speler {
 	private ArrayList<Kaart> kaarten;
 	private String startKleur;
 
-	private Collection<Deck> decks;
-
 	public Speler(String naam) {
 		setNaam(naam);
 	}

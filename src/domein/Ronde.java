@@ -30,4 +30,13 @@ public class Ronde {
 	public void legKaartBijStapel(int stapelNummer) {
 		throw new UnsupportedOperationException();
 	}
+
+	public boolean isLaatsteBeurt() {
+		boolean isLaatsteBeurt = false;
+		if (decks.size() == 1 && decks.get(0).isVol())
+		{
+			isLaatsteBeurt = true;
+		}
+		return isLaatsteBeurt;
+	}
 }

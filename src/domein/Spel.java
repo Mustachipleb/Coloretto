@@ -14,10 +14,12 @@ public class Spel {
 	 * Constructor
 	 */
 	public Spel() {
+		//TODO: startdeck shuffelen
 		this.startDeck = new Deck(63);
 	}
 
 	public void maakSpelersAan(int aantalSpelers, String[] namen) {
+		//TODO: spelers unieke kaart geven
 		spelers = new ArrayList<Speler>();
 		Random rnd = new Random();
 		
@@ -62,5 +64,9 @@ public class Spel {
 		{
 			this.huidigeRonde.neemStapel(stapelNummer);
 		}
+	}
+
+	public boolean isLaatsteBeurt() {
+		return huidigeRonde.isLaatsteBeurt();
 	}
 }
