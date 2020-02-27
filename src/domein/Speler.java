@@ -5,8 +5,7 @@ import java.util.*;
 public class Speler {
 
 	private String naam;
-	private ArrayList<Kaart> kaarten;
-	private String startKleur;
+	private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
 
 	public Speler(String naam) {
 		setNaam(naam);

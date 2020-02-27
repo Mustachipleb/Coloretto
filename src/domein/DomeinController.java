@@ -1,46 +1,46 @@
 package domein;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class DomeinController {
 
 	Spel spel;
 
-	public void startSpel(int aantalSpelers) {
-		throw new UnsupportedOperationException();
+	public DomeinController() 
+	{
+		
 	}
 
 	public void startNieuwSpel() {
 		this.spel = new Spel();
 	}
 
-	public void maakSpelersAan(int aantalSpelers, String[] namen) {
-		spel.maakSpelersAan(aantalSpelers, namen);
+	public void maakSpelersAan(String[] namen) {
+		spel.maakSpelersAan(namen);
 	}
-
-	public ArrayList<ArrayList<String>> getKaartenSpelers() {
-		ArrayList<ArrayList<Kaart>> kaartenPerSpeler = spel.getKaartenSpelers();
-		ArrayList<ArrayList<String>> kleurKaartenPerSpeler = new ArrayList<ArrayList<String>>();
-		for (ArrayList<Kaart> kaarten : kaartenPerSpeler)
-		{
-			List<String> kleurKaarten = kaarten.stream()
-				    .map(Kaart::getKleur)
-				    .collect(Collectors.toList());
-			kleurKaartenPerSpeler.add((ArrayList<String>)kleurKaarten);
+	
+	public ArrayList<String> getKaartenSpeler(String naam) {
+		ArrayList<Kaart> kaarten = this.spel.getKaartenSpeler(naam);
+		ArrayList<String> kaartenKleur = new ArrayList<String>();
+		for (Kaart k : kaarten) {
+			kaartenKleur.add(k.getKleur());
 		}
-		return kleurKaartenPerSpeler;
+		return kaartenKleur;
 	}
 
 	public String getSpelerAanBeurt() {
-		throw new UnsupportedOperationException();
+		return spel.getSpelerAanBeurt().getNaam();
 	}
 
 	public void speelSpel() {
-		throw new UnsupportedOperationException();
+		spel.speelSpel();
 	}
 
-	public void speelBeurt(String actie) {
-		throw new UnsupportedOperationException();
+	public void speelBeurt(String actie, int stapelNummer) {
+		spel.speelBeurt(actie, stapelNummer);
+	}
+	
+	public boolean isLaatsteBeurt() {
+		return spel.isLaatsteBeurt();
 	}
 }
