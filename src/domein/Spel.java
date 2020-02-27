@@ -14,12 +14,13 @@ public class Spel {
 	 * Constructor
 	 */
 	public Spel() {
-		//TODO: startdeck shuffelen
 		this.startDeck = new Deck(63);
+		startDeck.shuffle();
 	}
 
 	public void maakSpelersAan(int aantalSpelers, String[] namen) {
 		//TODO: spelers unieke kaart geven
+		Deque<String> kleuren = new ArrayDeque<String>();
 		spelers = new ArrayList<Speler>();
 		Random rnd = new Random();
 		
