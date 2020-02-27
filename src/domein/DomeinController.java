@@ -15,27 +15,17 @@ public class DomeinController {
 		this.spel = new Spel();
 	}
 
-	public void maakSpelersAan(int aantalSpelers, String[] namen) {
-		spel.maakSpelersAan(aantalSpelers, namen);
+	public void maakSpelersAan(String[] namen) {
+		spel.maakSpelersAan(namen);
 	}
-
-	public ArrayList<ArrayList<String>> getKaartenSpelers() {
-		ArrayList<ArrayList<Kaart>> kaartenPerSpeler = spel.getKaartenSpelers();
-		ArrayList<ArrayList<String>> kleurKaartenPerSpeler = new ArrayList<ArrayList<String>>();
-
-		// Deze nested loop gaat over elke Kaart per Speler, en zet de kaarten om naar hun kleur als String.
-		for (int i = 0; i < kaartenPerSpeler.size(); i++)
-		{
-			ArrayList<String> kleurKaarten = new ArrayList<String>();
-			for (int j = 0; j < kaartenPerSpeler.get(i).size(); j++)
-			{
-				Kaart kaart = kaartenPerSpeler.get(i).get(j);
-				kleurKaarten.add(kaart.getKleur());
-			}
-			kleurKaartenPerSpeler.add(kleurKaarten);
+	
+	public ArrayList<String> getKaartenSpeler(String naam) {
+		ArrayList<Kaart> kaarten = this.spel.getKaartenSpeler(naam);
+		ArrayList<String> kaartenKleur = new ArrayList<String>();
+		for (Kaart k : kaarten) {
+			kaartenKleur.add(k.getKleur());
 		}
-		
-		return kleurKaartenPerSpeler;
+		return kaartenKleur;
 	}
 
 	public String getSpelerAanBeurt() {

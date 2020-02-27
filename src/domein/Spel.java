@@ -5,8 +5,9 @@ import java.util.*;
 public class Spel {
 
 	private List<Speler> spelers;
-	private Deck startDeck;
+	private List<Kaart> spelDeck = new ArrayList<Kaart>();
 	private Ronde huidigeRonde;
+	private static final List<String> kleuren = new ArrayList<String>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
 
 	private Speler spelerAanBeurt;
 
@@ -14,34 +15,51 @@ public class Spel {
 	 * Constructor
 	 */
 	public Spel() {
-		this.startDeck = new Deck(63);
-		startDeck.shuffle();
-	}
-
-	public void maakSpelersAan(int aantalSpelers, String[] namen) {
-		//TODO: spelers unieke kaart geven
-		Deque<String> kleuren = new ArrayDeque<String>();
-		spelers = new ArrayList<Speler>();
-		Random rnd = new Random();
 		
-		for (int i = 0; i < aantalSpelers; i++)
+		// Voegt per kleur 9 kaarten toe aan de lijst van kaarten en shuffelt ze erna.
+		for (String kleur : getKleuren())
 		{
-			Speler s = new Speler(namen[i]);
-			spelers.add(s);
-		}
-		setSpelerAanBeurt(spelers.get(rnd.nextInt(aantalSpelers)));
-	}
-
-	public ArrayList<ArrayList<Kaart>> getKaartenSpelers() {
-		ArrayList<ArrayList<Kaart>> kaartenSpelers = new ArrayList<ArrayList<Kaart>>();
-		for (int i = 0; i < spelers.size(); i++)
-		{
-			for (int j = 0; j < spelers.get(i).getKaarten().size(); j++)
+			for (int i = 0; i < 9; i++)
 			{
-				kaartenSpelers.add(spelers.get(i).getKaarten());
+				Kaart k = new Kaart(kleur);
+				getSpelDeck().add(k);
 			}
 		}
-		return kaartenSpelers;
+		Collections.shuffle(getSpelDeck());
+	}
+
+	private List<Kaart> getSpelDeck() {
+		return spelDeck;
+	}
+
+	private static List<String> getKleuren() {
+		return kleuren;
+	}
+
+	public void maakSpelersAan(String[] namen) {
+		spelers = new ArrayList<Speler>();
+		Random rnd = new Random();
+		List<String> unassignedKleuren = getKleuren();
+		
+		for (int i = 0; i < namen.length; i++)
+		{
+			int randomIndex = rnd.nextInt(unassignedKleuren.size());
+			Speler s = new Speler(namen[i]);
+			s.getKaarten().add(new Kaart(unassignedKleuren.get(randomIndex)));
+			unassignedKleuren.remove(randomIndex);
+			spelers.add(s);
+		}
+		setSpelerAanBeurt(spelers.get(rnd.nextInt(namen.length)));
+	}
+	
+	public ArrayList<Kaart> getKaartenSpeler(String naam) {
+		ArrayList<Kaart> kaarten = null; 
+		for (Speler s : this.spelers) {
+			if (s.getNaam().equals(naam)) {
+				kaarten = s.getKaarten();
+			}
+		}
+		return kaarten;
 	}
 
 	public Speler getSpelerAanBeurt() {

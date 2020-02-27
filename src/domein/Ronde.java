@@ -11,7 +11,7 @@ public class Ronde {
 		
 		for (int i = 0; i < 5; i++)
 		{
-			this.getDecks().add(new Deck(3, 0));
+			this.getDecks().add(new Deck());
 		}
 	}
 	
