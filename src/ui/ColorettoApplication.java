@@ -42,6 +42,9 @@ public class ColorettoApplication {
 			}
 			System.out.println();
 		}
+		dc.speelSpel();
+		dc.getStapelsHuidigeRonde();
+		
 		/*System.out.println();
 		for (int i = 0; i < namen.length; i++) {
 			System.out.printf("%-8s", dc.getKaartenSpeler(namen[i]).get(i));

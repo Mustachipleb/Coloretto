@@ -15,7 +15,6 @@ public class Spel {
 	 * Constructor
 	 */
 	public Spel() {
-		
 		// Voegt per kleur 9 kaarten toe aan de lijst van kaarten en shuffelt ze erna.
 		for (String kleur : getKleuren())
 		{
@@ -83,9 +82,14 @@ public class Spel {
 		{
 			this.huidigeRonde.neemStapel(stapelNummer);
 		}
+		//setSpelerAanBeurt(spelers.get(spelers.indexOf(getSpelerAanBeurt()) + 1);
 	}
 
 	public boolean isLaatsteBeurt() {
 		return huidigeRonde.isLaatsteBeurt();
+	}
+	
+	public List<Deck> getStapelsHuidigeRonde() {
+		return huidigeRonde.getDecks();
 	}
 }

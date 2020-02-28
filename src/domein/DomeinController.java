@@ -43,4 +43,18 @@ public class DomeinController {
 	public boolean isLaatsteBeurt() {
 		return spel.isLaatsteBeurt();
 	}
+	
+	public List<ArrayList<String>> getStapelsHuidigeRonde() {
+		List<Deck> decks = spel.getStapelsHuidigeRonde();
+		List<ArrayList<String>> decksOutput = new ArrayList<ArrayList<String>>();
+		for (Deck d : decks) {
+			List<Kaart> kaarten = d.getKaarten();
+			ArrayList<String> kaartenOutput = new ArrayList<String>();
+			for (Kaart k : kaarten) {
+				kaartenOutput.add(k.getKleur());
+			}
+			decksOutput.add(kaartenOutput);
+		}
+		return decksOutput;
+	}
 }
