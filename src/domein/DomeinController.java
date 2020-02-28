@@ -39,8 +39,30 @@ public class DomeinController {
 	public void speelBeurt(String actie, int stapelNummer) {
 		spel.speelBeurt(actie, stapelNummer);
 	}
+  
+	public List<ArrayList<String>> getStapelsHuidigeRonde() {
+		List<Deck> decks = spel.getStapelsHuidigeRonde();
+		List<ArrayList<String>> decksOutput = new ArrayList<ArrayList<String>>();
+		for (Deck d : decks) {
+			List<Kaart> kaarten = d.getKaarten();
+			ArrayList<String> kaartenOutput = new ArrayList<String>();
+			for (Kaart k : kaarten) {
+				kaartenOutput.add(k.getKleur());
+			}
+			decksOutput.add(kaartenOutput);
+		}
+		return decksOutput;
+	}
 	
-	public boolean isLaatsteBeurt() {
-		return spel.isLaatsteBeurt();
+	public String getKaartVanSpelDeck() {
+		return spel.getKaartVanSpelDeck().getKleur();
+	}
+	
+	public boolean isStapelVol(int stapelNummer) {
+		return spel.isStapelVol(stapelNummer);
+	}
+	
+	public boolean isStapelLeeg(int stapelNummer) {
+		return spel.isStapelLeeg(stapelNummer);
 	}
 }

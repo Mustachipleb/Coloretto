@@ -22,4 +22,10 @@ public class Speler {
 	private void setNaam(String naam) {
 		this.naam = naam;
 	}
+	
+	public void voegDeckAanKaartenToe(Deck d) {
+		for (int i = 0; i < d.getKaarten().size(); i++) {
+			getKaarten().add(d.getKaarten().get(i));
+		}
+	}
 }
