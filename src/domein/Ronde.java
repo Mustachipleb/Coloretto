@@ -6,10 +6,10 @@ public class Ronde {
 
 	private List<Deck> decks;
 	
-	public Ronde() {
+	public Ronde(int aantalSpelers) {
 		this.setDecks(new ArrayList<Deck>());
 		
-		for (int i = 0; i < 5; i++)
+		for (int i = 0; i < aantalSpelers; i++)
 		{
 			this.getDecks().add(new Deck());
 		}
@@ -24,19 +24,20 @@ public class Ronde {
 	}
 
 	public Deck neemStapel(int stapelNummer) {
-		throw new UnsupportedOperationException();
+		Deck d = getDecks().get(stapelNummer);
+		getDecks().remove(stapelNummer);
+		return d;
 	}
 	
-	public void legKaartBijStapel(int stapelNummer) {
-		throw new UnsupportedOperationException();
+	public void legKaartBijStapel(int stapelNummer, Kaart k) {
+		getDecks().get(stapelNummer).voegKaartToe(k);
 	}
-
-	public boolean isLaatsteBeurt() {
-		boolean isLaatsteBeurt = false;
-		if (decks.size() == 1 && decks.get(0).isVol())
-		{
-			isLaatsteBeurt = true;
-		}
-		return isLaatsteBeurt;
+	
+	public boolean isStapelVol(int stapelNummer) {
+		return getDecks().get(stapelNummer).isVol();
+	}
+	
+	public boolean isStapelLeeg(int stapelNummer) {
+		return getDecks().get(stapelNummer).isLeeg();
 	}
 }

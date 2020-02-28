@@ -39,10 +39,6 @@ public class DomeinController {
 	public void speelBeurt(String actie, int stapelNummer) {
 		spel.speelBeurt(actie, stapelNummer);
 	}
-	
-	public boolean isLaatsteBeurt() {
-		return spel.isLaatsteBeurt();
-	}
   
 	public List<ArrayList<String>> getStapelsHuidigeRonde() {
 		List<Deck> decks = spel.getStapelsHuidigeRonde();
@@ -56,5 +52,17 @@ public class DomeinController {
 			decksOutput.add(kaartenOutput);
 		}
 		return decksOutput;
+	}
+	
+	public String getKaartVanSpelDeck() {
+		return spel.getKaartVanSpelDeck().getKleur();
+	}
+	
+	public boolean isStapelVol(int stapelNummer) {
+		return spel.isStapelVol(stapelNummer);
+	}
+	
+	public boolean isStapelLeeg(int stapelNummer) {
+		return spel.isStapelLeeg(stapelNummer);
 	}
 }

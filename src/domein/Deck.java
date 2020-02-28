@@ -22,4 +22,17 @@ public class Deck {
 		}
 		return isVol;
 	}
+	
+	public boolean isLeeg() {
+		boolean isLeeg = false;
+		if (getKaarten().size() == 0)
+		{
+			isLeeg = true;
+		}
+		return isLeeg;
+	}
+	
+	public void voegKaartToe(Kaart k) {
+		getKaarten().add(k);
+	}
 }
