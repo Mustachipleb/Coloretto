@@ -7,6 +7,7 @@ public class Deck {
 	private List<Kaart> kaarten;
 	
 	public Deck() {
+		this.kaarten = new ArrayList<Kaart>();
 	}
 
 	public List<Kaart> getKaarten() {

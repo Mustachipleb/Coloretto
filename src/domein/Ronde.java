@@ -15,7 +15,7 @@ public class Ronde {
 		}
 	}
 	
-	private List<Deck> getDecks() {
+	public List<Deck> getDecks() {
 		return decks;
 	}
 
