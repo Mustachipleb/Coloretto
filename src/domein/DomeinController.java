@@ -43,4 +43,7 @@ public class DomeinController {
 	public boolean isLaatsteBeurt() {
 		return spel.isLaatsteBeurt();
 	}
+	public List<List<String>> getStapelsHuidigeRonde(){
+		
+	}
 }
