@@ -48,12 +48,23 @@ public class ColorettoApplication {
 		/*System.out.println();
 		for (int i = 0; i < namen.length; i++) {
 			System.out.printf("%-8s", dc.getKaartenSpeler(namen[i]).get(i));
-		}
-		ArrayList<String> kaarten = dc.getKaartenSpeler(dc.getSpelerAanBeurt());
+		List<List<String>> stapels = dc.getStapelsHuidigeRonde();
 		
-		Set<String> distinct = new HashSet<>(kaarten);
-		for (String s : distinct) {
-			System.out.println(s + ": " + Collections.frequency(kaarten, s));
-		}*/
+		for(int i = 0; i <5; i++)
+		{
+			System.out.println("Stapel " + i+1);
+			
+			int aantalKaarten = stapels.get(i).size();
+				for(int j=0; j<aantalKaarten; j++)	
+				{
+					System.out.printf("%-10s", stapels.get(i).get(j));
+					
+					
+				}
+		}
+		
+		
+		
+		
 	}
 }

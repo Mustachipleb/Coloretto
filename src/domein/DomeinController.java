@@ -43,7 +43,7 @@ public class DomeinController {
 	public boolean isLaatsteBeurt() {
 		return spel.isLaatsteBeurt();
 	}
-	
+  
 	public List<ArrayList<String>> getStapelsHuidigeRonde() {
 		List<Deck> decks = spel.getStapelsHuidigeRonde();
 		List<ArrayList<String>> decksOutput = new ArrayList<ArrayList<String>>();
