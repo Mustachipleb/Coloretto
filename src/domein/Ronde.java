@@ -11,7 +11,7 @@ public class Ronde {
 		
 		for (int i = 0; i < 5; i++)
 		{
-			this.getDecks().add(new Deck(3, 0));
+			this.getDecks().add(new Deck());
 		}
 	}
 	
@@ -29,5 +29,14 @@ public class Ronde {
 	
 	public void legKaartBijStapel(int stapelNummer) {
 		throw new UnsupportedOperationException();
+	}
+
+	public boolean isLaatsteBeurt() {
+		boolean isLaatsteBeurt = false;
+		if (decks.size() == 1 && decks.get(0).isVol())
+		{
+			isLaatsteBeurt = true;
+		}
+		return isLaatsteBeurt;
 	}
 }
