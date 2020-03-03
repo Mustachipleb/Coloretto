@@ -2,29 +2,36 @@ package domein;
 
 import java.util.*;
 
-public class Speler {
+public class Speler 
+{
 
 	private String naam;
 	private ArrayList<Kaart> kaarten = new ArrayList<Kaart>();
 
-	public Speler(String naam) {
+	public Speler(String naam) 
+	{
 		setNaam(naam);
 	}
 
-	public ArrayList<Kaart> getKaarten() {
+	public ArrayList<Kaart> getKaarten() 
+	{
 		return this.kaarten;
 	}
 
-	public String getNaam() {
+	public String getNaam() 
+	{
 		return naam;
 	}
 
-	private void setNaam(String naam) {
+	private void setNaam(String naam) 
+	{
 		this.naam = naam;
 	}
 	
-	public void voegDeckAanKaartenToe(Deck d) {
-		for (int i = 0; i < d.getKaarten().size(); i++) {
+	public void voegDeckAanKaartenToe(Stapel d) 
+	{
+		for (int i = 0; i < d.getKaarten().size(); i++) 
+		{
 			getKaarten().add(d.getKaarten().get(i));
 		}
 	}
