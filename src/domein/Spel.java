@@ -174,6 +174,6 @@ public class Spel
 
 	public List<Speler> getSpelers()
 	{
-		return getSpelers();
+		return this.spelers;
 	}
 }

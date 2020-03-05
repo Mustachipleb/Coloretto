@@ -12,7 +12,6 @@ public class ColorettoApplication
 	{
 		//Scanner keyboard = new Scanner(System.in);
 		DomeinController dc = new DomeinController();
-		String[] namen;
 		boolean inputCorrect = false;
 		int aantalSpelers;
 		
@@ -31,7 +30,7 @@ public class ColorettoApplication
 				System.out.println(dc.getSpelerAanBeurt() + " is aan beurt, en dit zijn de kaarten van elke speler:");
 				for (String naam : namen) 
 				{
-					System.out.printf(getFormatStringLangsteString(namen), naam)
+					System.out.printf(getFormatStringLangsteString(namen), naam);
 					List<String> kaarten = dc.getKaartenSpeler(naam);
 					Set<String> distinct = new HashSet<>(kaarten);
 					for (String s : distinct) 
@@ -113,7 +112,7 @@ public class ColorettoApplication
 				} while(!inputCorrect);
 				dc.speelBeurt(actie, stapelNummer - 1);
 			}
-		}
+		
 		keyboard.close();
 		for (Speler s : dc.getSpelers()) 
 		{
