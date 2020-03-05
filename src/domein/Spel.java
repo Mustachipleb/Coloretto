@@ -5,9 +5,9 @@ import java.util.*;
 public class Spel 
 {
 	private List<Speler> spelers;
-	private List<Kaart> spelDeck = new ArrayList<Kaart>();
+	private List<Kaart> spelDeck = new ArrayList<>();
 	private Ronde huidigeRonde;
-	private static final List<String> kleuren = new ArrayList<String>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
+	private static final List<String> kleuren = new ArrayList<>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
 
 	private Speler spelerAanBeurt;
 
@@ -21,9 +21,18 @@ public class Spel
 		{
 			for (int i = 0; i < 9; i++)
 			{
-				Kaart k = new Kaart(kleur);
-				getSpelDeck().add(k);
+				getSpelDeck().add(new Kaart(kleur));
 			}
+		}
+		
+		for (int i = 0; i < 10; i++)
+		{
+			getSpelDeck().add(new Kaart("+2"));
+		}
+		
+		for (int i = 0; i < 3; i++) 
+		{
+			getSpelDeck().add(new Kaart("joker"));
 		}
 		Collections.shuffle(getSpelDeck());
 	}
@@ -61,8 +70,8 @@ public class Spel
 	
 	public List<Kaart> getKaartenSpeler(String naam) 
 	{
-		ArrayList<Kaart> kaarten = null; 
-		for (Speler s : this.spelers) 
+		List<Kaart> kaarten = null; 
+		for (Speler s : getSpelers()) 
 		{
 			if (s.getNaam().equals(naam)) 
 			{
@@ -84,7 +93,7 @@ public class Spel
 
 	public void maakSpelersAan(String[] namen) 
 	{
-		spelers = new ArrayList<Speler>();
+		spelers = new ArrayList<>();
 		Random rnd = new Random();
 		List<String> unassignedKleuren = getKleuren();
 		
@@ -131,5 +140,40 @@ public class Spel
 				setSpelerAanBeurt(spelers.get(0));
 			}
 		}
+	}
+
+
+	public boolean isLaatsteRonde() 
+	{
+		return getSpelDeck().size() <= 15;
+	}
+
+
+	public List<Integer> berekenScore() 
+	{
+		List<Integer> scores = new ArrayList<>();
+		for (Speler s : getSpelers())
+		{
+			scores.add(s.berekenScore());
+		}
+		return scores;
+	}
+
+
+	public void assignJoker(String speler, String nieuweKleur) 
+	{
+		for (Speler s : getSpelers())
+		{
+			if (s.getNaam().equals(speler))
+			{
+				s.assignJoker(nieuweKleur);
+			}
+		}
+	}
+
+
+	public List<Speler> getSpelers()
+	{
+		return getSpelers();
 	}
 }

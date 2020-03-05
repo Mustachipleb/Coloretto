@@ -66,4 +66,24 @@ public class DomeinController
 	{
 		return spel.isStapelLeeg(stapelNummer);
 	}
+	
+	public boolean isLaatsteRonde()
+	{
+		return spel.isLaatsteRonde();
+	}
+	
+	public List<Integer> berekenScore()
+	{
+		return spel.berekenScore();
+	}
+	
+	public void assignJoker(String speler, String nieuweKleur)
+	{
+		spel.assignJoker(speler, nieuweKleur);
+	}
+	
+	public Speler[] getSpelers()
+	{
+		return spel.getSpelers().toArray(new Speler[0]);
+	}
 }

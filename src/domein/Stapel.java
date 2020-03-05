@@ -10,7 +10,7 @@ public class Stapel
 	
 	public Stapel(int nummer) 
 	{
-		this.kaarten = new ArrayList<Kaart>();
+		this.kaarten = new ArrayList<>();
 		this.nummer = nummer;
 	}
 

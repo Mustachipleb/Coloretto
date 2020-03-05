@@ -12,6 +12,7 @@ public class ColorettoApplication
 	{
 		//Scanner keyboard = new Scanner(System.in);
 		DomeinController dc = new DomeinController();
+		String[] namen;
 		boolean inputCorrect = false;
 		int aantalSpelers;
 		
@@ -27,93 +28,112 @@ public class ColorettoApplication
 		dc.speelSpel();
 		while(!dc.getStapelsHuidigeRonde().isEmpty())
 		{
-			System.out.println(dc.getSpelerAanBeurt() + " is aan beurt, en dit zijn de kaarten van elke speler:");
-			for (String naam : namen) 
-			{
-				System.out.printf(getFormatStringLangsteString(namen), naam);
-				List<String> kaarten = dc.getKaartenSpeler(naam);
-				Set<String> distinct = new HashSet<>(kaarten);
-				for (String s : distinct) 
+				System.out.println(dc.getSpelerAanBeurt() + " is aan beurt, en dit zijn de kaarten van elke speler:");
+				for (String naam : namen) 
 				{
-					System.out.printf("%-10s", s + ": " + Collections.frequency(kaarten, s));
-				}
-				System.out.println();
-			}
-			
-			System.out.println("Stapels op het veld:");
-
-			List<Stapel> stapels = dc.getStapelsHuidigeRonde();
-			for(int i = 0; i < stapels.size(); i++) 
-			{
-				System.out.printf("%-10s",("Stapel " + (stapels.get(i).getNummer() + 1) + ":"));
-				List<String> kleuren = new ArrayList<String>();
-				for (int j = 0; j < stapels.get(i).getKaarten().size(); j++) 
-				{
-					kleuren.add(stapels.get(i).getKaarten().get(j).getKleur());
-				}
-				Set<String> distinct = new HashSet<>(kleuren);
-				for (String s : distinct) 
-				{
-					System.out.printf("%-10s", s + ": " + Collections.frequency(kleuren, s));
-				}
-				System.out.println();
-			}
-			
-			String actie;
-			int stapelNummer = 0;
-			inputCorrect = false;
-			do 
-			{
-				System.out.print("Wat wil je doen? (nemen n of leggen l): ");
-				actie = keyboard.next().toLowerCase().trim();
-				if (actie.equals("leggen") || actie.equals("l")) 
-				{
-					System.out.println("Je hebt een kaart met kleur " + dc.getKaartVanSpelDeck() + " genomen.");
-					System.out.print("Op welke stapel wil je hem leggen?: ");
-					stapelNummer = keyboard.hasNextInt() ? keyboard.nextInt() : -1;
-					if (stapelNummer < stapels.size() && stapelNummer > 0) 
+					System.out.printf(getFormatStringLangsteString(namen), naam)
+					List<String> kaarten = dc.getKaartenSpeler(naam);
+					Set<String> distinct = new HashSet<>(kaarten);
+					for (String s : distinct) 
 					{
-						if (dc.isStapelVol(stapelNummer - 1)) 
+						System.out.printf("%-10s", s + ": " + Collections.frequency(kaarten, s));
+					}
+					System.out.println();
+				}
+				
+				System.out.println("Stapels op het veld:");
+	
+				List<Stapel> stapels = dc.getStapelsHuidigeRonde();
+				for(int i = 0; i < stapels.size(); i++) 
+				{
+					System.out.printf("%-10s",("Stapel " + (stapels.get(i).getNummer() + 1) + ":"));
+					List<String> kleuren = new ArrayList<>();
+					for (int j = 0; j < stapels.get(i).getKaarten().size(); j++) 
+					{
+						kleuren.add(stapels.get(i).getKaarten().get(j).getKleur());
+					}
+					Set<String> distinct = new HashSet<>(kleuren);
+					for (String s : distinct) 
+					{
+						System.out.printf("%-10s", s + ": " + Collections.frequency(kleuren, s));
+					}
+					System.out.println();
+				}
+				
+				String actie;
+				int stapelNummer = 0;
+				inputCorrect = false;
+				do 
+				{
+					System.out.print("Wat wil je doen? (nemen n of leggen l): ");
+					actie = keyboard.next().toLowerCase().trim();
+					if (actie.equals("leggen") || actie.equals("l")) 
+					{
+						System.out.println("Je hebt een kaart met kleur " + dc.getKaartVanSpelDeck() + " genomen.");
+						System.out.print("Op welke stapel wil je hem leggen?: ");
+						stapelNummer = keyboard.hasNextInt() ? keyboard.nextInt() : -1;
+						if (stapelNummer <= stapels.size() && stapelNummer > 0) 
 						{
-							System.err.println("Er mogen geen kaarten meer bij deze stapel.");
+							if (dc.isStapelVol(stapelNummer - 1)) 
+							{
+								System.err.println("Er mogen geen kaarten meer bij deze stapel.");
+							}
+							else 
+							{
+								inputCorrect = true;
+							}
 						}
 						else 
 						{
-							inputCorrect = true;
+							System.err.println("De stapel waarbij je een kaart wil leggen bestaat niet.");
+							keyboard.next();
 						}
 					}
-					else 
+					else if(actie.equals("nemen") || actie.equals("n")) 
 					{
-						System.err.println("De stapel waarbij je een kaart wil leggen bestaat niet.");
-						keyboard.next();
-					}
-				}
-				else if(actie.equals("nemen") || actie.equals("n")) 
-				{
-					System.out.print("Welke stapel wil je nemen? (nummer): ");
-					stapelNummer = keyboard.hasNextInt() ? keyboard.nextInt() : -1;
-					if (stapelNummer < stapels.size() && stapelNummer > 0) 
-					{
-						if (dc.isStapelLeeg(stapelNummer - 1)) 
+						System.out.print("Welke stapel wil je nemen? (nummer): ");
+						stapelNummer = keyboard.hasNextInt() ? keyboard.nextInt() : -1;
+						if (stapelNummer <= stapels.size() && stapelNummer > 0) 
 						{
-							System.err.println("Je kan geen lege stapel nemen.");
+							if (dc.isStapelLeeg(stapelNummer - 1)) 
+							{
+								System.err.println("Je kan geen lege stapel nemen.");
+							}
+							else 
+							{
+								inputCorrect = true;
+							}
 						}
 						else 
 						{
-							inputCorrect = true;
+							System.err.println("De stapel die je wilt nemen bestaat niet.");
+							keyboard.next();
 						}
 					}
-					else 
-					{
-						System.err.println("De stapel die je wilt nemen bestaat niet.");
-						keyboard.next();
-					}
-				}
-			} while(!inputCorrect);
-			dc.speelBeurt(actie, stapelNummer - 1);
+				} while(!inputCorrect);
+				dc.speelBeurt(actie, stapelNummer - 1);
+			}
 		}
 		keyboard.close();
-		System.out.println("Einde prototype");
+		for (Speler s : dc.getSpelers()) 
+		{
+			int aantalJokers = Collections.frequency(s.getKaarten(), new Kaart("joker"));
+			if (aantalJokers > 0)
+			{
+				System.out.printf("%s, je hebt %s jokers:%n", s.getNaam(), aantalJokers);
+				for (int i = 0; i < aantalJokers; i++) 
+				{
+					System.out.printf("Welke kleur wil ");
+				}
+			}
+		}
+		System.out.println("Einde prototype - Scores:");
+		/**TODO: zie {@see domein.Speler#berekenScore()}*/
+		List<Integer> scores = dc.berekenScore();
+		for (int i = 0; i < namen.length; i++) 
+		{
+			System.out.println(namen[i] + ": ");
+		}
 	}
 	
 	private static int nextIntAndValidate()
