@@ -59,7 +59,7 @@ public class Spel
 		return kleuren;
 	}
 	
-	public ArrayList<Kaart> getKaartenSpeler(String naam) 
+	public List<Kaart> getKaartenSpeler(String naam) 
 	{
 		ArrayList<Kaart> kaarten = null; 
 		for (Speler s : this.spelers) 

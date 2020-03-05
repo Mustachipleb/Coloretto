@@ -6,9 +6,11 @@ import java.util.*;
 
 public class ColorettoApplication 
 {
+	private static Scanner keyboard = new Scanner(System.in);
+	
 	public static void main(String[] args) 
 	{
-		Scanner keyboard = new Scanner(System.in);
+		//Scanner keyboard = new Scanner(System.in);
 		DomeinController dc = new DomeinController();
 		boolean inputCorrect = false;
 		int aantalSpelers;
@@ -16,38 +18,20 @@ public class ColorettoApplication
 		//String[] namen = new String[]{"foo", "bar", "col", "fons", "thijs"}; //Array voorbeeldnamen
 		
 		dc.startNieuwSpel();
-		System.out.println("Welkom bij Coloretto!");
-		do 
-		{
-			System.out.print("Met hoeveel spelers wenst u te spelen?: ");
-			aantalSpelers = keyboard.nextInt();
-			if (aantalSpelers == 4 || aantalSpelers == 5) 
-			{
-				inputCorrect = true;
-			} 
-			else 
-			{
-				System.err.println("Ongeldige hoeveelheid spelers, 4 of 5 nodig.");
-			}
-		} while(!inputCorrect);
+		System.out.print("Welkom bij Coloretto! Wil je met 4 of 5 spelers spelen?: ");
+		aantalSpelers = nextIntAndValidate(4, 5);
 		
-		String[] namen = new String[aantalSpelers];
-		for (int i = 0; i < aantalSpelers; i++) 
-		{
-			System.out.print("Wat is de naam van speler " + (i + 1) + "?: ");
-			namen[i] = keyboard.next();
-			keyboard.nextLine();
-		}
+		String[] namen = vraagNamen(aantalSpelers);
 		
 		dc.maakSpelersAan(namen);
 		dc.speelSpel();
-		while(dc.getStapelsHuidigeRonde().size() != 0) 
+		while(!dc.getStapelsHuidigeRonde().isEmpty())
 		{
 			System.out.println(dc.getSpelerAanBeurt() + " is aan beurt, en dit zijn de kaarten van elke speler:");
 			for (String naam : namen) 
 			{
-				System.out.printf("%-10s", naam);
-				ArrayList<String> kaarten = dc.getKaartenSpeler(naam);
+				System.out.printf(getFormatStringLangsteString(namen), naam);
+				List<String> kaarten = dc.getKaartenSpeler(naam);
 				Set<String> distinct = new HashSet<>(kaarten);
 				for (String s : distinct) 
 				{
@@ -131,4 +115,57 @@ public class ColorettoApplication
 		keyboard.close();
 		System.out.println("Einde prototype");
 	}
+	
+	private static int nextIntAndValidate()
+	{
+		int number;
+		while (!keyboard.hasNextInt())
+		{
+			System.err.print("Dit is geen nummer, probeer opnieuw: ");
+			keyboard.next();
+		}
+		number = keyboard.nextInt();
+		return number;
+	}
+	
+	private static int nextIntAndValidate(int lowerBound, int upperBound)
+	{
+		int number;
+		while (!keyboard.hasNextInt())
+		{
+			System.err.print("Dit is geen nummer, probeer opnieuw: ");
+			keyboard.next();
+		}
+		number = keyboard.nextInt();
+		while (number < lowerBound || number > upperBound)
+		{
+			System.err.printf("Geef een nummer tussen %s en %s in: ", lowerBound, upperBound);
+			number = nextIntAndValidate(lowerBound, upperBound);
+		}
+		return number;
+	}
+	
+	private static String[] vraagNamen(int aantalSpelers)
+	{
+		String[] namen = new String[aantalSpelers];
+		keyboard.nextLine();
+		for (int i = 0; i < aantalSpelers; i++) 
+		{
+			System.out.print("Wat is de naam van speler " + (i + 1) + "?: ");
+			namen[i] = keyboard.nextLine();
+		}
+		return namen;
+	}
+	
+	private static String getFormatStringLangsteString(String[] strings)
+	{
+		int maxLengte = 0;
+		for (String s : strings)
+		{
+			maxLengte = s.length() > maxLengte ? s.length() : maxLengte;
+		}
+		maxLengte++;
+		return ("%-" + maxLengte + "s");
+	}
+	
 }

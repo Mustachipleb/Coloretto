@@ -22,10 +22,10 @@ public class DomeinController
 		spel.maakSpelersAan(namen);
 	}
 	
-	public ArrayList<String> getKaartenSpeler(String naam) 
+	public List<String> getKaartenSpeler(String naam) 
 	{
-		ArrayList<Kaart> kaarten = this.spel.getKaartenSpeler(naam);
-		ArrayList<String> kaartenKleur = new ArrayList<String>();
+		List<Kaart> kaarten = this.spel.getKaartenSpeler(naam);
+		List<String> kaartenKleur = new ArrayList<>();
 		for (Kaart k : kaarten) {
 			kaartenKleur.add(k.getKleur());
 		}
