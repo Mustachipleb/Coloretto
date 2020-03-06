@@ -91,23 +91,23 @@ public class Spel
 		return huidigeRonde.isStapelLeeg(stapelNummer);
 	}
 
-	public void maakSpelersAan(String[] namen) 
+	public void maakSpelersAan(List<String> namen) 
 	{
 		spelers = new ArrayList<>();
 		Random rnd = new Random();
 		List<String> unassignedKleuren = getKleuren();
 		
-		for (int i = 0; i < namen.length; i++)
+		for (int i = 0; i < namen.size(); i++)
 		{
 			int randomIndex = rnd.nextInt(unassignedKleuren.size());
-			Speler s = new Speler(namen[i]);
+			Speler s = new Speler(namen.get(i));
 			Kaart k = new Kaart(unassignedKleuren.get(randomIndex));
 			s.getKaarten().add(k);
 			spelDeck.remove(k);
 			unassignedKleuren.remove(randomIndex);
 			spelers.add(s);
 		}
-		setSpelerAanBeurt(spelers.get(rnd.nextInt(namen.length)));
+		setSpelerAanBeurt(spelers.get(rnd.nextInt(namen.size())));
 	}
 
 	public void speelSpel() 
@@ -117,12 +117,12 @@ public class Spel
 
 	public void speelBeurt(String actie, int stapelNummer) 
 	{
-		if (actie.equals("leggen") || actie.equals("l"))
+		if ("leggen".equals(actie) || "l".equals(actie))
 		{
 			this.huidigeRonde.legKaartBijStapel(stapelNummer, spelDeck.get(0));
 			spelDeck.remove(0);
 		}
-		else if (actie.equals("nemen") || actie.equals("n"))
+		else if ("nemen".equals(actie) || "n".equals(actie))
 		{
 			getSpelerAanBeurt().voegDeckAanKaartenToe(huidigeRonde.neemStapel(stapelNummer));
 		}

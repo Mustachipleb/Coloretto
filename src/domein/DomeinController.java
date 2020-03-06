@@ -5,19 +5,14 @@ import java.util.*;
 public class DomeinController 
 {
 
-	Spel spel;
-
-	public DomeinController() 
-	{
-		
-	}
+	private Spel spel;
 
 	public void startNieuwSpel() 
 	{
 		this.spel = new Spel();
 	}
 
-	public void maakSpelersAan(String[] namen) 
+	public void maakSpelersAan(List<String> namen) 
 	{
 		spel.maakSpelersAan(namen);
 	}
@@ -82,8 +77,9 @@ public class DomeinController
 		spel.assignJoker(speler, nieuweKleur);
 	}
 	
-	public Speler[] getSpelers()
+	public List<Speler> getSpelers()
 	{
-		return spel.getSpelers().toArray(new Speler[0]);
+		return spel.getSpelers();
 	}
+	
 }
