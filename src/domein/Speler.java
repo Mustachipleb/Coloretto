@@ -28,7 +28,7 @@ public class Speler
 		this.naam = naam;
 	}
 	
-	public void voegDeckAanKaartenToe(Stapel d) 
+	public void geefStapelKaarten(Stapel d)
 	{
 		for (int i = 0; i < d.getKaarten().size(); i++) 
 		{
@@ -39,68 +39,45 @@ public class Speler
 	public int berekenScore()
 	{
 		int totaalScore = 0;
-		int aantalJokers = 0;
-		List<String> kleuren = new ArrayList<>();
-		for (int i = 0; i < getKaarten().size(); i++) 
-		{
-			kleuren.add(getKaarten().get(i).getKleur());
-		}
+		Set<Kaart> distinct = new HashSet<>(getKaarten());
+		if (distinct.contains(new Kaart("joker")))
+			throw new IllegalStateException("Er zouden geen jokers meer mogen zijn.");
 
-		/* Pseudocode:
-		 * totalScore <- 0
-		 * amountOfJokers <- 0
-		 * For every unique card in the player's possession
-		 *     score <- 0
-		 *     amountOfCards <- amount of cards of the same color
-		 *     If the card is a +2
-		 *         score <- score + (2 * amountOfCards)
-		 *     Else if the card is a joker
-		 *         amountOfJokers <- amountOfJokers + 1
-		 *     Else
-		 *         For every value between 1 (inclusive) and amountOfJokers (inclusive)
-		 *             score <- score + value
-		 *         If score is higher than 21
-		 *             score <- 21
-		 *     totalScore <- totalScore += score
-		 */
-		
-		/* TODO: telling jokers.
-		 * brainstorm:
-		 *     op einde spel vragen welke kleur de jokers moeten worden (moet niet allemaal zelfde zijn),
-		 *     en met een nieuwe methode de jokers hun kleur reassignen. (Kaart.setKleur? -> validatie dat dit een joker is)
-		 *     
-		 */
-		
-		Set<String> distinct = new HashSet<>(kleuren);
-		for (String s : distinct)
+		List<Integer> aantalKaartenPerKleur = new ArrayList<>();
+		for (Kaart k : distinct)
+		{
+			if ("+2".equals(k.getKleur()))
+				totaalScore += (2 * Collections.frequency(getKaarten(), k));
+			else
+				aantalKaartenPerKleur.add(Collections.frequency(getKaarten(), k));
+		}
+		aantalKaartenPerKleur.sort(Collections.reverseOrder());
+
+		for (int i = 0; i < Math.min(3, aantalKaartenPerKleur.size()); i++)
 		{
 			int scoreVanKleur = 0;
-			int aantalKaartenVanKleur = Collections.frequency(kleuren, s);
-			switch (s)
+			for (int j = 1; j <= aantalKaartenPerKleur.get(i); j++)
 			{
-				case "+2":
-					scoreVanKleur += (2 * aantalKaartenVanKleur);
-					break;
-				case "joker":
-					aantalJokers++;
-					break;
-				default:
-					for (int i = 1; i <= aantalKaartenVanKleur; i++)
-					{
-						scoreVanKleur += i;
-					}
-					scoreVanKleur = scoreVanKleur > 21 ? 21 : scoreVanKleur;
-					break;
+				scoreVanKleur += j;
 			}
-			totaalScore += scoreVanKleur;
+			totaalScore += Math.min(scoreVanKleur, 21);
+		}
+
+		for (int i = 3; i < aantalKaartenPerKleur.size(); i++)
+		{
+			int scoreVanKleur = 0;
+			for (int j = 1; j <= aantalKaartenPerKleur.get(i); j++)
+			{
+				scoreVanKleur += j;
+			}
+			totaalScore -= Math.min(scoreVanKleur, 21);
 		}
 		return totaalScore;
 	}
 	
 	public void assignJoker(String nieuweKleur)
 	{
-		int jokerIndex = getKaarten().indexOf(new Kaart("joker"));
-		getKaarten().remove(jokerIndex);
+		getKaarten().remove(new Kaart("joker"));
 		getKaarten().add(new Kaart(nieuweKleur));
 	}
 }

@@ -5,47 +5,34 @@ import java.util.*;
 public class Spel 
 {
 	private List<Speler> spelers;
+	private Speler spelerAanBeurt;
 	private List<Kaart> spelDeck = new ArrayList<>();
 	private Ronde huidigeRonde;
-	private static final List<String> kleuren = new ArrayList<>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
+	private static final List<String> KLEUREN = new ArrayList<>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
+	private static final int AANTAL_JOKERS = 3;
+	private static final int AANTAL_PLUS2 = 10;
+	private static final int AANTAL_KAARTEN_PER_KLEUR = 9;
 
-	private Speler spelerAanBeurt;
-
-	/**
-	 * Constructor
-	 */
-	public Spel() 
+	public Spel()
 	{
-		// Voegt per kleur 9 kaarten toe aan de lijst van kaarten en shuffelt ze erna.
 		for (String kleur : getKleuren())
-		{
-			for (int i = 0; i < 9; i++)
-			{
-				getSpelDeck().add(new Kaart(kleur));
-			}
-		}
-		
-		for (int i = 0; i < 10; i++)
-		{
-			getSpelDeck().add(new Kaart("+2"));
-		}
-		
-		for (int i = 0; i < 3; i++) 
-		{
-			getSpelDeck().add(new Kaart("joker"));
-		}
-		Collections.shuffle(getSpelDeck());
+			for (int i = 0; i < AANTAL_KAARTEN_PER_KLEUR; i++)
+				spelDeck.add(new Kaart(kleur));
+		for (int i = 0; i < AANTAL_PLUS2; i++)
+			spelDeck.add(new Kaart("+2"));
+		for (int i = 0; i < AANTAL_JOKERS; i++)
+			spelDeck.add(new Kaart("joker"));
+		Collections.shuffle(spelDeck);
 	}
 
-
-	public List<Stapel> getStapelsHuidigeRonde() 
+	public Ronde getHuidigeRonde()
 	{
-		return huidigeRonde.getStapels();
+		return this.huidigeRonde;
 	}
 	
-	public Kaart getKaartVanSpelDeck() 
+	public Kaart peekKaart()
 	{
-		return getSpelDeck().get(0);
+		return spelDeck.get(0);
 	}
 
 	public Speler getSpelerAanBeurt() 
@@ -58,49 +45,21 @@ public class Spel
 		this.spelerAanBeurt = spelerAanBeurt;
 	}
 
-	private List<Kaart> getSpelDeck() 
-	{
-		return spelDeck;
-	}
-
 	private static List<String> getKleuren() 
 	{
-		return kleuren;
-	}
-	
-	public List<Kaart> getKaartenSpeler(String naam) 
-	{
-		List<Kaart> kaarten = null; 
-		for (Speler s : getSpelers()) 
-		{
-			if (s.getNaam().equals(naam)) 
-			{
-				kaarten = s.getKaarten();
-			}
-		}
-		return kaarten;
-	}
-		
-	public boolean isStapelVol(int stapelNummer) 
-	{
-		return huidigeRonde.isStapelVol(stapelNummer);
-	}
-	
-	public boolean isStapelLeeg(int stapelNummer) 
-	{
-		return huidigeRonde.isStapelLeeg(stapelNummer);
+		return KLEUREN;
 	}
 
-	public void maakSpelersAan(List<String> namen) 
+	public void maakSpelersAan(List<String> namen)
 	{
 		spelers = new ArrayList<>();
 		Random rnd = new Random();
 		List<String> unassignedKleuren = getKleuren();
-		
-		for (int i = 0; i < namen.size(); i++)
+
+		for (String naman : namen)
 		{
 			int randomIndex = rnd.nextInt(unassignedKleuren.size());
-			Speler s = new Speler(namen.get(i));
+			Speler s = new Speler(naman);
 			Kaart k = new Kaart(unassignedKleuren.get(randomIndex));
 			s.getKaarten().add(k);
 			spelDeck.remove(k);
@@ -110,70 +69,56 @@ public class Spel
 		setSpelerAanBeurt(spelers.get(rnd.nextInt(namen.size())));
 	}
 
-	public void speelSpel() 
+	public void startNieuweRonde()
 	{
-		this.huidigeRonde = new Ronde(spelers.size());
+		this.huidigeRonde = new Ronde(spelers);
 	}
 
-	public void speelBeurt(String actie, int stapelNummer) 
+	public void legKaartBijStapel(Stapel stapel)
 	{
-		if ("leggen".equals(actie) || "l".equals(actie))
-		{
-			this.huidigeRonde.legKaartBijStapel(stapelNummer, spelDeck.get(0));
-			spelDeck.remove(0);
-		}
-		else if ("nemen".equals(actie) || "n".equals(actie))
-		{
-			getSpelerAanBeurt().voegDeckAanKaartenToe(huidigeRonde.neemStapel(stapelNummer));
-		}
-		
-		for (int i = 0; i < spelers.size(); i++) 
-		{
-			boolean isZelfdeSpeler = spelers.get(i).equals(getSpelerAanBeurt());
-			if (isZelfdeSpeler && i != (spelers.size() - 1)) 
-			{
-				setSpelerAanBeurt(spelers.get(i + 1));
-				break;
-			}
-			else if (isZelfdeSpeler && i == (spelers.size() - 1)) 
-			{
-				setSpelerAanBeurt(spelers.get(0));
-			}
-		}
+		huidigeRonde.legKaartBijStapel(stapel, spelDeck.get(0));
+		spelDeck.remove(0);
+		volgendeSpelerAanBeurt();
 	}
 
+	public void geefStapelinhoudAanSpeler(Stapel stapel)
+	{
+		getSpelerAanBeurt().geefStapelKaarten(huidigeRonde.neemStapel(stapel));
+		huidigeRonde.getSpelersDieNogMogenSpelen().remove(getSpelerAanBeurt());
+		volgendeSpelerAanBeurt();
+	}
 
 	public boolean isLaatsteRonde() 
 	{
-		return getSpelDeck().size() <= 15;
+		return spelDeck.size() <= 15;
 	}
 
-
-	public List<Integer> berekenScore() 
+	public void assignJoker(Speler speler, String nieuweKleur)
 	{
-		List<Integer> scores = new ArrayList<>();
-		for (Speler s : getSpelers())
-		{
-			scores.add(s.berekenScore());
-		}
-		return scores;
+		speler.assignJoker(nieuweKleur);
 	}
-
-
-	public void assignJoker(String speler, String nieuweKleur) 
-	{
-		for (Speler s : getSpelers())
-		{
-			if (s.getNaam().equals(speler))
-			{
-				s.assignJoker(nieuweKleur);
-			}
-		}
-	}
-
 
 	public List<Speler> getSpelers()
 	{
 		return this.spelers;
+	}
+
+	private void volgendeSpelerAanBeurt()
+	{
+		for (int i = 0; i < spelers.size(); i++)
+		{
+			boolean isZelfdeSpeler = spelers.get(i).equals(getSpelerAanBeurt());
+			if (isZelfdeSpeler && i == (spelers.size() - 1))
+			{
+				setSpelerAanBeurt(spelers.get(0));
+			}
+			else if (isZelfdeSpeler)
+			{
+				setSpelerAanBeurt(spelers.get(i + 1));
+				break;
+			}
+		}
+		if (!huidigeRonde.getSpelersDieNogMogenSpelen().contains(getSpelerAanBeurt()) && !huidigeRonde.getSpelersDieNogMogenSpelen().isEmpty())
+			volgendeSpelerAanBeurt();
 	}
 }

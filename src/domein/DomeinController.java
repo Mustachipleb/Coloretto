@@ -16,50 +16,35 @@ public class DomeinController
 	{
 		spel.maakSpelersAan(namen);
 	}
-	
-	public List<String> getKaartenSpeler(String naam) 
-	{
-		List<Kaart> kaarten = this.spel.getKaartenSpeler(naam);
-		List<String> kaartenKleur = new ArrayList<>();
-		for (Kaart k : kaarten) {
-			kaartenKleur.add(k.getKleur());
-		}
-		return kaartenKleur;
-	}
 
 	public String getSpelerAanBeurt() 
 	{
 		return spel.getSpelerAanBeurt().getNaam();
 	}
 
-	public void speelSpel() 
+	public void startNieuweRonde()
 	{
-		spel.speelSpel();
+		spel.startNieuweRonde();
 	}
 
-	public void speelBeurt(String actie, int stapelNummer) 
+	public void legKaartBijStapel(Stapel stapel)
 	{
-		spel.speelBeurt(actie, stapelNummer);
+		spel.legKaartBijStapel(stapel);
+	}
+
+	public void geefStapelinhoudAanSpeler(Stapel stapel)
+	{
+		spel.geefStapelinhoudAanSpeler(stapel);
 	}
   
-	public List<Stapel> getStapelsHuidigeRonde() 
+	public Ronde getHuidigeRonde()
 	{
-		return spel.getStapelsHuidigeRonde();
+		return spel.getHuidigeRonde();
 	}
 	
-	public String getKaartVanSpelDeck() 
+	public Kaart peekKaart()
 	{
-		return spel.getKaartVanSpelDeck().getKleur();
-	}
-	
-	public boolean isStapelVol(int stapelNummer) 
-	{
-		return spel.isStapelVol(stapelNummer);
-	}
-	
-	public boolean isStapelLeeg(int stapelNummer) 
-	{
-		return spel.isStapelLeeg(stapelNummer);
+		return spel.peekKaart();
 	}
 	
 	public boolean isLaatsteRonde()
@@ -67,12 +52,7 @@ public class DomeinController
 		return spel.isLaatsteRonde();
 	}
 	
-	public List<Integer> berekenScore()
-	{
-		return spel.berekenScore();
-	}
-	
-	public void assignJoker(String speler, String nieuweKleur)
+	public void assignJoker(Speler speler, String nieuweKleur)
 	{
 		spel.assignJoker(speler, nieuweKleur);
 	}

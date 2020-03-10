@@ -7,6 +7,7 @@ public class Stapel
 
 	private List<Kaart> kaarten;
 	private int nummer;
+	private static final int MAX_SIZE = 3;
 	
 	public Stapel(int nummer) 
 	{
@@ -31,6 +32,8 @@ public class Stapel
 	
 	public void voegKaartToe(Kaart k) 
 	{
+		if (getKaarten().size() >= MAX_SIZE)
+			throw new IllegalStateException("De stapel mag maar " + MAX_SIZE + " kaarten bevatten.");
 		getKaarten().add(k);
 	}
 

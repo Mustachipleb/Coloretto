@@ -1,11 +1,16 @@
 package domein;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class Kaart 
+public class Kaart
 {
 
 	private String kleur;
+	private static final List<String> KAARTTYPES = new ArrayList<>(
+			Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze", "+2", "joker")
+	);
 
 	public Kaart(String kleur) 
 	{
@@ -19,6 +24,8 @@ public class Kaart
 
 	private void setKleur(String kleur) 
 	{
+		if (!KAARTTYPES.contains(kleur))
+			throw new IllegalArgumentException(kleur + " is geen geldige kleur.");
 		this.kleur = kleur;
 	}
 	
@@ -34,9 +41,9 @@ public class Kaart
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (obj == null ||!(obj instanceof Kaart)) return false;
+		if (!(obj instanceof Kaart)) return false;
 		if (obj == this) return true;
-		return this.getKleur() == ((Kaart) obj).getKleur();
+		return this.getKleur().equals(((Kaart) obj).getKleur());
 	}
 	
 	@Override

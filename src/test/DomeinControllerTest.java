@@ -1,4 +1,4 @@
-package testen;
+package test;
 
 public class DomeinControllerTest {
 	

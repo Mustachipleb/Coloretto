@@ -4,14 +4,13 @@ import java.util.*;
 
 public class Ronde 
 {
-
-	private List<Stapel> stapels;
+	private List<Stapel> stapels = new ArrayList<>();
+	private List<Speler> spelersDieNogMogenSpelen = new ArrayList<>();
 	
-	public Ronde(int aantalSpelers) 
+	public Ronde(List<Speler> spelers)
 	{
-		this.setDecks(new ArrayList<Stapel>());
-		
-		for (int i = 0; i < aantalSpelers; i++)
+		spelersDieNogMogenSpelen.addAll(spelers);
+		for (int i = 0; i < spelers.size(); i++)
 		{
 			this.getStapels().add(new Stapel(i));
 		}
@@ -22,30 +21,30 @@ public class Ronde
 		return stapels;
 	}
 
-	private void setDecks(List<Stapel> stapels) 
+	public Stapel neemStapel(Stapel stapel)
 	{
-		this.stapels = stapels;
-	}
-
-	public Stapel neemStapel(int stapelNummer) 
-	{
-		Stapel d = getStapels().get(stapelNummer);
-		getStapels().remove(stapelNummer);
+		Stapel d = getStapels().get(getStapels().indexOf(stapel));
+		getStapels().set(getStapels().indexOf(d), null);
 		return d;
 	}
-	
-	public void legKaartBijStapel(int stapelNummer, Kaart k) 
+
+	public void legKaartBijStapel(Stapel stapel, Kaart kaart)
 	{
-		getStapels().get(stapelNummer).voegKaartToe(k);
+		getStapels().get(getStapels().indexOf(stapel)).voegKaartToe(kaart);
 	}
-	
-	public boolean isStapelVol(int stapelNummer) 
+
+	public List<Speler> getSpelersDieNogMogenSpelen()
 	{
-		return getStapels().get(stapelNummer).isVol();
+		return spelersDieNogMogenSpelen;
 	}
-	
-	public boolean isStapelLeeg(int stapelNummer) 
+
+	public boolean zijnAlleStapelsGenomen()
 	{
-		return getStapels().get(stapelNummer).isLeeg();
+		for (Stapel s : getStapels())
+		{
+			if (s != null)
+				return false;
+		}
+		return true;
 	}
 }
