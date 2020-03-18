@@ -172,7 +172,7 @@ public class ColorettoApplication
 				try 
 				{
 					System.out.print("Welke stapel wil je nemen? (nummer): ");
-					stapelNummer = keyboardInt.hasNextInt() ? keyboardInt.nextInt() : -1;
+					stapelNummer = nextIntAndValidate(1, stapels.size());
 					if (stapelNummer <= stapels.size() && stapelNummer > 0)
 					{
 						if (stapels.get(stapelNummer - 1).isLeeg())
