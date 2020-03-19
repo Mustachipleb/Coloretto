@@ -56,10 +56,10 @@ public class Spel
 		Random rnd = new Random();
 		List<String> unassignedKleuren = getKleuren();
 
-		for (String naman : namen)
+		for (String naam : namen)
 		{
 			int randomIndex = rnd.nextInt(unassignedKleuren.size());
-			Speler s = new Speler(naman);
+			Speler s = new Speler(naam);
 			Kaart k = new Kaart(unassignedKleuren.get(randomIndex));
 			s.getKaarten().add(k);
 			spelDeck.remove(k);

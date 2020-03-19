@@ -10,17 +10,20 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
  import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Stage;
 
 public class WelkomScherm extends GridPane
 {
+	private List<TextField> textFields = new ArrayList<TextField>();
+	
 	public WelkomScherm()
 	{
-		final List<TextField> textFields = new ArrayList<TextField>();
 		Font titelFont = Font.font("Tahoma", FontWeight.NORMAL, Font.getDefault().getSize() * 1.3);
 		this.setAlignment(Pos.CENTER);
 		this.setHgap(10);
@@ -60,7 +63,7 @@ public class WelkomScherm extends GridPane
 				boolean isInputCorrect = true;
 				for (TextField txt : textFields)
 				{
-					if (!txt.isDisable() && txt.getText().trim() == "")
+					if (!txt.isDisable() && txt.getText().isBlank())
 					{
 						isInputCorrect = false;
 						Alert alert = new Alert(AlertType.ERROR);
@@ -74,9 +77,7 @@ public class WelkomScherm extends GridPane
 				
 				if(isInputCorrect)
 				{
-					List<String> namen = textFields.stream().map(x -> x.getText()).collect(Collectors.toList());
-					SpelScherm spelScherm = new SpelScherm(namen);
-					
+					createSpelScherm();
 				}
 				event.consume();
 			}
@@ -98,5 +99,18 @@ public class WelkomScherm extends GridPane
 				}
 			}
 		});
+	}
+	
+	private void createSpelScherm()
+	{
+		List<String> namen = textFields.stream()
+				.filter(field -> !field.isDisable()) //Neem alleen de enabled textvakken
+				.map(x -> x.getText()) //Get hun invoer
+				.collect(Collectors.toList()); //Collect als List
+		SpelScherm spelScherm = new SpelScherm(namen);
+		Scene scene = new Scene(spelScherm, 1250, 750);
+		Stage stage = (Stage) this.getScene().getWindow();
+		stage.setScene(scene);
+		stage.show();
 	}
 }
