@@ -24,6 +24,7 @@ public class SpelScherm extends GridPane
 {
 	private DomeinController dc = new DomeinController();
 	private List<String> namen;
+	private List<Speler> spelers;
 	private GridPane grdSpelerInformatie;
 	
 	public SpelScherm(List<String> namen)
@@ -31,6 +32,7 @@ public class SpelScherm extends GridPane
 		this.namen = namen;
 		dc.startNieuwSpel();
 		dc.maakSpelersAan(namen);
+		this.spelers = dc.getSpelers();
 		setUpWindow();
 		updateSpelerKaarten();
 	}
@@ -43,17 +45,27 @@ public class SpelScherm extends GridPane
 		this.setPadding(new Insets(25, 25, 25, 25));
 		
 		GridPane grdSpel = new GridPane();
+		Label lblColoretto = new Label("Coloretto");
 		
+		
+		// Setup van linkerdeel van het scherm (Informatie over de spelers en hun kaarten)
 		grdSpelerInformatie = new GridPane();
 		Label lblKaartenSpelers = new Label("Kaarten:");
+		lblKaartenSpelers.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 1.7));
 		grdSpelerInformatie.add(lblKaartenSpelers, 0, 0);
 		int desiredPos = 1;
 		for (int i = 0; i < namen.size(); i++)
 		{
 			Label lblSpelerNaam = new Label(String.format("%s:", namen.get(i)));
+			Label lblSpelerScore = new Label(String.format("Score: %s", spelers.get(i).berekenScore()));
 			FlowPane flwSpelerKaarten = new FlowPane();
+			
+			setHalignment(lblSpelerScore, HPos.RIGHT);
+			lblSpelerScore.setMinWidth(50);
+			
 			grdSpelerInformatie.add(lblSpelerNaam, 0, desiredPos);
 			grdSpelerInformatie.add(flwSpelerKaarten, 0, desiredPos + 1);
+			grdSpelerInformatie.add(lblSpelerScore, 1, desiredPos);
 			desiredPos += 2;
 		}
 		setHalignment(grdSpelerInformatie, HPos.RIGHT);
@@ -69,11 +81,24 @@ public class SpelScherm extends GridPane
 		List<Speler> spelers = dc.getSpelers();
 		List<FlowPane> flwSpelerKaarten = grdSpelerInformatie.getChildren().stream()
 				.filter(node -> node instanceof FlowPane) //Filter de lijst om alleen flowpanes te zien
-				.map(node -> (FlowPane)node) //Cast de Node objecten naar FlowPane
+				.map(node -> (FlowPane) node) //Cast de Node objecten naar FlowPane
 				.collect(Collectors.toList()); //Collect het resultaat als List
+		List<Label> lblSpelers = grdSpelerInformatie.getChildren().stream()
+				.filter(node -> node instanceof Label)
+				.map(node -> (Label) node)
+				.collect(Collectors.toList());
+		lblSpelers.remove(0);
 		for (int i = 0; i < namen.size(); i++)
 		{
 			Speler s = spelers.get(i);
+			if (s.equals(dc.getSpelerAanBeurt()))
+			{
+				lblSpelers.get(i + i).setFont(Font.font("Tahoma", FontWeight.EXTRA_BOLD, Font.getDefault().getSize()));
+			}
+			else
+			{
+				lblSpelers.get(i + i).setFont(Font.font("Tahoma", FontWeight.NORMAL, Font.getDefault().getSize()));
+			}
 			List<Kaart> kaartenSpeler = s.getKaarten();
 			Set<Kaart> distinct = new HashSet<Kaart>(kaartenSpeler);
 			flwSpelerKaarten.get(i).getChildren().clear();

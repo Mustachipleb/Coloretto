@@ -17,9 +17,9 @@ public class DomeinController
 		spel.maakSpelersAan(namen);
 	}
 
-	public String getSpelerAanBeurt() 
+	public Speler getSpelerAanBeurt() 
 	{
-		return spel.getSpelerAanBeurt().getNaam();
+		return spel.getSpelerAanBeurt();
 	}
 
 	public void startNieuweRonde()
