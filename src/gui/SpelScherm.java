@@ -50,7 +50,6 @@ public class SpelScherm extends GridPane
 		
 		// Setup van linkerdeel van het scherm (Informatie over de spelers en hun kaarten.)
 		GridPane grdSpel = new GridPane();
-		
 		GridPane grdInstructions = new GridPane();
 		Label lblInstructions = new Label("Instructies");
 		lblInstructions.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 2.5));
@@ -58,16 +57,21 @@ public class SpelScherm extends GridPane
 		Label lblaantalkaarten = new Label("Aantal Kaarten");
 		lblaantalkaarten.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
 		grdInstructions.add(lblaantalkaarten, 0, 2);
-		Label lblpunten = new Label("Puten");
-		lblpunten.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
-		grdInstructions.add(lblpunten, 1, 2);
-		
-		
-		
+		Label lblnummer = new Label();
+		lblnummer.setText("1\n2\n3\n4\n5\n6");
+		lblaantalkaarten.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
+		grdInstructions.add(lblnummer, 0, 3);
+		Label lblpunten = new Label();
+		lblpunten.setText("1\n3\n6\n10\n15\n21");
+		lblaantalkaarten.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
+		grdInstructions.add(lblpunten, 1, 3);
+		Label lblpuntennaam = new Label("Punten");
+		lblpuntennaam.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
+		grdInstructions.add(lblpuntennaam, 1, 2);
 		
 		Label lblColoretto = new Label("Coloretto");
 		lblColoretto.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 2.5));
-		grdSpel.add(lblColoretto, 1, 0);
+		grdSpel.add(lblColoretto, 2, 0);
 		
 		
 		// Setup van rechterdeel van het scherm (Informatie over de spelers en hun kaarten)
