@@ -13,10 +13,13 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
@@ -33,6 +36,29 @@ public class SpelScherm extends GridPane
 		dc.startNieuwSpel();
 		dc.maakSpelersAan(namen);
 		this.spelers = dc.getSpelers();
+		dc.startNieuweRonde();
+		
+		//Test voor layout
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(0));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(0));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(0));
+
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(1));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(1));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(1));
+
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(2));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(2));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(2));
+
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(3));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(3));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(3));
+
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(4));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(4));
+		dc.legKaartBijStapel(dc.getHuidigeRonde().getStapels().get(4));
+		
 		setUpWindow();
 		updateSpelerKaarten();
 	}
@@ -47,8 +73,21 @@ public class SpelScherm extends GridPane
 		GridPane grdSpel = new GridPane();
 		Label lblColoretto = new Label("Coloretto");
 		
+		// colleke zn deel van linkerdeel van het scherm
+		/*TextArea txaInstructies = new TextArea();
+		txaInstructies.setText(
+			"The 2 -5 players draw cards from a card supply in the middle of the table."
+			+ "During the game, the players try to specialize in a few colors, because at the end of"
+			+ "the game, a player can score plus points for only 3 colors; the rest score minus points."
+			+ "The more cards a player has of a color, the more points he scores."
+			+ "The player with the most points wins."
+		);*/
+		HBox hboxStapels = new HBox();
+		//hboxStapels.setPrefWidth(800);
+		grdSpel.add(hboxStapels, 0, 3);
+		updateRondeStapels(hboxStapels);
 		
-		// Setup van linkerdeel van het scherm (Informatie over de spelers en hun kaarten)
+		// Setup van rechterdeel van het scherm (Informatie over de spelers en hun kaarten)
 		grdSpelerInformatie = new GridPane();
 		Label lblKaartenSpelers = new Label("Kaarten:");
 		lblKaartenSpelers.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 1.7));
@@ -71,6 +110,7 @@ public class SpelScherm extends GridPane
 		setHalignment(grdSpelerInformatie, HPos.RIGHT);
 		grdSpelerInformatie.setPrefWidth(200);
 		grdSpel.setPrefSize(1000, 700);
+		
 		this.add(grdSpel, 0, 0);
 		this.add(grdSpelerInformatie, 1, 0);
 		//TODO
@@ -112,6 +152,36 @@ public class SpelScherm extends GridPane
 					imvKaart.setPreserveRatio(true);
 					flwSpelerKaarten.get(i).getChildren().add(imvKaart);
 					flwSpelerKaarten.get(i).getChildren().add(new Label("x" + Collections.frequency(kaartenSpeler, k)));
+				}
+				catch (FileNotFoundException e)
+				{
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void updateRondeStapels(HBox hboxStapels)
+	{
+		List<Stapel> stapels = dc.getHuidigeRonde().getStapels();
+		hboxStapels.getChildren().clear();
+		for (Stapel stapel : stapels)
+		{
+			StackPane stckStapel = new StackPane();
+			hboxStapels.getChildren().add(stckStapel);
+			int xOffset = 0;
+			for (Kaart kaart : stapel.getKaarten())
+			{
+				try
+				{
+					Image imgKaart = new Image(new FileInputStream(String.format("src/images/kaart-%s.png", kaart.getKleur())));
+					ImageView imvKaart = new ImageView(imgKaart);
+					imvKaart.setFitWidth(60);
+					imvKaart.setPreserveRatio(true);
+					StackPane stckKaart = new StackPane(imvKaart);
+					stckKaart.setPadding(new Insets(0, xOffset, 0, 0));
+					xOffset += 80;
+					stckStapel.getChildren().add(stckKaart);
 				}
 				catch (FileNotFoundException e)
 				{
