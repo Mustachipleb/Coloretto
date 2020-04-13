@@ -108,7 +108,7 @@ public class WelkomScherm extends GridPane
 				.map(x -> x.getText()) //Get hun invoer
 				.collect(Collectors.toList()); //Collect als List
 		SpelScherm spelScherm = new SpelScherm(namen);
-		Scene scene = new Scene(spelScherm, 1250, 750);
+		Scene scene = new Scene(spelScherm, 1400, 650);
 		Stage stage = (Stage) this.getScene().getWindow();
 		stage.setScene(scene);
 		stage.show();

@@ -76,7 +76,7 @@ public class SpelScherm extends GridPane
 		// Setup van linkerdeel van het scherm (Informatie over de spelers en hun kaarten.)
 		GridPane grdSpel = new GridPane();
 		GridPane grdInstructions = new GridPane();
-		Label lblInstructions = new Label("Instructies");
+		/*Label lblInstructions = new Label("Instructies");
 		lblInstructions.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 2.5));
 		grdInstructions.add(lblInstructions, 0, 0);
 		Label lblaantalkaarten = new Label("Aantal Kaarten");
@@ -92,21 +92,24 @@ public class SpelScherm extends GridPane
 		grdInstructions.add(lblpunten, 1, 3);
 		Label lblpuntennaam = new Label("Punten");
 		lblpuntennaam.setFont(Font.font("Tahoma", Font.getDefault().getSize() * 1.2));
-		grdInstructions.add(lblpuntennaam, 1, 2);
+		grdInstructions.add(lblpuntennaam, 1, 2);*/
 		
 		Label lblColoretto = new Label("Coloretto");
 		lblColoretto.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 2.5));
-		grdSpel.add(lblColoretto, 2, 0);
+		grdInstructions.add(lblColoretto, 0, 0);
 		
-		// colleke zn deel van linkerdeel van het scherm
-		/*TextArea txaInstructies = new TextArea();
-		txaInstructies.setText(
-			"The 2 -5 players draw cards from a card supply in the middle of the table."
-			+ "During the game, the players try to specialize in a few colors, because at the end of"
-			+ "the game, a player can score plus points for only 3 colors; the rest score minus points."
-			+ "The more cards a player has of a color, the more points he scores."
+		Label lblInstructies = new Label();
+		lblInstructies.setText(
+			"The 2 -5 players draw cards from a card supply in the middle of the table.\n"
+			+ "During the game, the players try to specialize in a few colors, because at the end of "
+			+ "the game, a player can score plus points for only 3 colors; the rest score minus points.\n"
+			+ "The more cards a player has of a color, the more points he scores. "
 			+ "The player with the most points wins."
-		);*/
+		);
+		grdInstructions.setMaxWidth(200);
+		lblInstructies.setWrapText(true);
+		grdInstructions.add(lblInstructies, 0, 1);
+		
 		HBox hboxStapels = new HBox();
 		//hboxStapels.setPrefWidth(800);
 		grdSpel.add(hboxStapels, 0, 3);
