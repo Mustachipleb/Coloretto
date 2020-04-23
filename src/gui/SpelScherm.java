@@ -20,6 +20,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
@@ -52,7 +54,7 @@ public class SpelScherm extends GridPane
 		try
 		{
 			cards.put("back", new Image(new FileInputStream("src/images/kaart-back.png")));
-			cards.put("plus2", new Image(new FileInputStream("src/images/kaart-+2.png")));
+			cards.put("+2", new Image(new FileInputStream("src/images/kaart-+2.png")));
 			cards.put("blauw", new Image(new FileInputStream("src/images/kaart-blauw.png")));
 			cards.put("bruin", new Image(new FileInputStream("src/images/kaart-bruin.png")));
 			cards.put("geel", new Image(new FileInputStream("src/images/kaart-geel.png")));
@@ -64,6 +66,7 @@ public class SpelScherm extends GridPane
 		}
 		catch (FileNotFoundException e)
 		{
+			e.printStackTrace();
 			//TODO: Error bericht
 		}
 		
@@ -76,21 +79,76 @@ public class SpelScherm extends GridPane
 				{
 					if (isCardDrawn)
 					{
-						for (int i = 0; i < rondeStapels.size(); i++)
+						for (int i = 2; i >= 0; i--)
 						{
-							StackPane stckCard = (StackPane) rondeStapels.get(i).getChildren().get(0);
+							StackPane stckCard = (StackPane) stckStapel.getChildren().get(i);
 							ImageView card = (ImageView) stckCard.getChildren().get(0);
-							if (card.getImage().equals(cards.get("back")))
+							if (card.getImage().equals(cards.get("back")) && isCardDrawn)
 							{
+								isCardDrawn = false;
 								card.setImage(cards.get(dc.peekKaart().getKleur()));
-								dc.legKaartBijStapel(i);
 								updateSpelerKaarten();
-								break;
 							}
 						}
 						
-						isCardDrawn = false;
+						for (int i = 0; i < rondeStapels.size(); i++)
+						{
+							if (rondeStapels.get(i).equals(stckStapel))
+							{
+								try
+								{
+									dc.legKaartBijStapel(i);
+								}
+								catch (IllegalStateException e)
+								{
+									Alert alert = new Alert(AlertType.ERROR);
+									alert.setTitle("Error Dialog");
+									alert.setHeaderText("Look, an Error Dialog");
+									alert.setContentText("Ooops, there was an error!");
+
+									alert.showAndWait();
+								}
+								catch (NullPointerException e)
+								{
+									Alert alert = new Alert(AlertType.ERROR);
+									alert.setTitle("Error Dialog");
+									alert.setHeaderText("Look, an Error Dialog");
+									alert.setContentText("Stapel Bestaat Niet");
+
+									alert.showAndWait();
+								}
+							}
+						}
 					}
+					else
+					{
+						for (int i = 0; i < rondeStapels.size(); i++)
+						{
+							if (rondeStapels.get(i).equals(stckStapel))
+							{
+								try
+								{
+									dc.geefStapelinhoudAanSpeler(i);
+									for (Node nCard : stckStapel.getChildren())
+									{
+										StackPane stckCard = (StackPane) nCard;
+										ImageView imvCard = (ImageView) stckCard.getChildren().get(0);
+										imvCard.setImage(cards.get("back"));
+									}
+								}
+								catch (IllegalStateException e)
+								{
+									Alert alert = new Alert(AlertType.ERROR);
+									alert.setTitle("Error Dialog");
+									alert.setHeaderText("Look, an Error Dialog");
+									alert.setContentText("Ooops, there was an error!");
+
+									alert.showAndWait();
+								}
+							}
+						}
+					}
+					event.consume();
 				}
 			});
 			stckStapel.setMinWidth(120);
@@ -168,18 +226,6 @@ public class SpelScherm extends GridPane
 		grdSpel.add(hboxStapels, 0, 3);
 		//grdInstructions.add(lblpuntennaam, 1, 2);*/
 		
-		Label lblColoretto = new Label("Coloretto");
-		lblColoretto.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 2.5));
-		grdInstructions.add(lblColoretto, 0, 0);
-		
-		Label lblInstructies = new Label();
-		lblInstructies.setText(
-			"The 2 -5 players draw cards from a card supply in the middle of the table.\n"
-			+ "During the game, the players try to specialize in a few colors, because at the end of "
-			+ "the game, a player can score plus points for only 3 colors; the rest score minus points.\n"
-			+ "The more cards a player has of a color, the more points he scores. "
-			+ "The player with the most points wins."
-		);
 		grdInstructions.setMaxWidth(200);
 		lblInstructies.setWrapText(true);
 		grdInstructions.add(lblInstructies, 0, 1);
@@ -252,19 +298,11 @@ public class SpelScherm extends GridPane
 			flwSpelerKaarten.get(i).getChildren().clear();
 			for (Kaart k : distinct)
 			{
-				try
-				{
-					Image imgKaart = new Image(new FileInputStream(String.format("src/images/kaart-%s.png", k.getKleur())));
-					ImageView imvKaart = new ImageView(imgKaart);
-					imvKaart.setFitWidth(25);
-					imvKaart.setPreserveRatio(true);
-					flwSpelerKaarten.get(i).getChildren().add(imvKaart);
-					flwSpelerKaarten.get(i).getChildren().add(new Label("x" + Collections.frequency(kaartenSpeler, k)));
-				}
-				catch (FileNotFoundException e)
-				{
-					e.printStackTrace();
-				}
+				ImageView imvKaart = new ImageView(cards.get(k.getKleur()));
+				imvKaart.setFitWidth(25);
+				imvKaart.setPreserveRatio(true);
+				flwSpelerKaarten.get(i).getChildren().add(imvKaart);
+				flwSpelerKaarten.get(i).getChildren().add(new Label("x" + Collections.frequency(kaartenSpeler, k)));
 			}
 		}
 	}
@@ -280,47 +318,31 @@ public class SpelScherm extends GridPane
 	
 	private void updateSpeldeck()
 	{
-		try
-		{
-			GridPane grdSpeldeckWrapper = new GridPane();
-			setHalignment(grdSpeldeckWrapper, HPos.CENTER);
-			Image imgCardBack = new Image(new FileInputStream("src/images/kaart-back.png"));
-			imvDrawableCard = new ImageView(imgCardBack);
-			ImageView imvCardBack = new ImageView(imgCardBack);
-			Label lblCardCount = new Label(String.format("(%s)", dc.getAantalKaartenOpSpelDeck()));
-			setHalignment(lblCardCount, HPos.CENTER);
-			imvCardBack.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-			    @Override
-			    public void handle(MouseEvent event) {
-			    	if (!isCardDrawn) 
-			    	{
-						try 
-						{
-							Image imgKaart = new Image(new FileInputStream(
-									String.format("src/images/kaart-%s.png", dc.peekKaart().getKleur())));
-							imvDrawableCard.setImage(imgKaart);
-						}
-						catch (FileNotFoundException e) 
-						{
-							e.printStackTrace();
-						}
-						isCardDrawn = true;
-					}
-			    	event.consume();
-			    }
-			});
-			imvDrawableCard.setFitWidth(170);
-			imvDrawableCard.setPreserveRatio(true);
-			imvCardBack.setFitWidth(170);
-			imvCardBack.setPreserveRatio(true);
-			grdSpeldeckWrapper.add(imvDrawableCard, 0, 0);
-			grdSpeldeckWrapper.add(imvCardBack, 1, 0);
-			grdSpeldeckWrapper.add(lblCardCount, 0, 1);
-			grdSpeldeck.add(grdSpeldeckWrapper, 0, 0);
-		}
-		catch (FileNotFoundException e)
-		{
-			e.printStackTrace();
-		}
+		GridPane grdSpeldeckWrapper = new GridPane();
+		setHalignment(grdSpeldeckWrapper, HPos.CENTER);
+		Image imgCardBack = cards.get("back");
+		imvDrawableCard = new ImageView(imgCardBack);
+		ImageView imvCardBack = new ImageView(imgCardBack);
+		Label lblCardCount = new Label(String.format("(%s)", dc.getAantalKaartenOpSpelDeck()));
+		setHalignment(lblCardCount, HPos.CENTER);
+		imvCardBack.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+		    @Override
+		    public void handle(MouseEvent event) {
+		    	if (!isCardDrawn) 
+		    	{
+					imvDrawableCard.setImage(cards.get(dc.peekKaart().getKleur()));
+					isCardDrawn = true;
+				}
+		    	event.consume();
+		    }
+		});
+		imvDrawableCard.setFitWidth(170);
+		imvDrawableCard.setPreserveRatio(true);
+		imvCardBack.setFitWidth(170);
+		imvCardBack.setPreserveRatio(true);
+		grdSpeldeckWrapper.add(imvDrawableCard, 0, 0);
+		grdSpeldeckWrapper.add(imvCardBack, 1, 0);
+		grdSpeldeckWrapper.add(lblCardCount, 0, 1);
+		grdSpeldeck.add(grdSpeldeckWrapper, 0, 0);
 	}
 }
