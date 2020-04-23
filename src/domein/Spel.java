@@ -74,16 +74,16 @@ public class Spel
 		this.huidigeRonde = new Ronde(spelers);
 	}
 
-	public void legKaartBijStapel(Stapel stapel)
+	public void legKaartBijStapel(int stapelnummer)
 	{
-		huidigeRonde.legKaartBijStapel(stapel, spelDeck.get(0));
+		huidigeRonde.legKaartBijStapel(huidigeRonde.getStapels().get(stapelnummer), spelDeck.get(0));
 		spelDeck.remove(0);
 		volgendeSpelerAanBeurt();
 	}
 
-	public void geefStapelinhoudAanSpeler(Stapel stapel)
+	public void geefStapelinhoudAanSpeler(int stapelnummer)
 	{
-		getSpelerAanBeurt().geefStapelKaarten(huidigeRonde.neemStapel(stapel));
+		getSpelerAanBeurt().geefStapelKaarten(huidigeRonde.neemStapel(huidigeRonde.getStapels().get(stapelnummer)));
 		huidigeRonde.getSpelersDieNogMogenSpelen().remove(getSpelerAanBeurt());
 		volgendeSpelerAanBeurt();
 	}
@@ -120,5 +120,10 @@ public class Spel
 		}
 		if (!huidigeRonde.getSpelersDieNogMogenSpelen().contains(getSpelerAanBeurt()) && !huidigeRonde.getSpelersDieNogMogenSpelen().isEmpty())
 			volgendeSpelerAanBeurt();
+	}
+
+	public int getAantalKaartenOpSpelDeck() 
+	{
+		return spelDeck.size();
 	}
 }
