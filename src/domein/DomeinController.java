@@ -27,14 +27,14 @@ public class DomeinController
 		spel.startNieuweRonde();
 	}
 
-	public void legKaartBijStapel(Stapel stapel)
+	public void legKaartBijStapel(int stapelnummer)
 	{
-		spel.legKaartBijStapel(stapel);
+		spel.legKaartBijStapel(stapelnummer);
 	}
 
-	public void geefStapelinhoudAanSpeler(Stapel stapel)
+	public void geefStapelinhoudAanSpeler(int stapelnummer)
 	{
-		spel.geefStapelinhoudAanSpeler(stapel);
+		spel.geefStapelinhoudAanSpeler(stapelnummer);
 	}
   
 	public Ronde getHuidigeRonde()
@@ -62,4 +62,8 @@ public class DomeinController
 		return spel.getSpelers();
 	}
 	
+	public int getAantalKaartenOpSpelDeck()
+	{
+		return spel.getAantalKaartenOpSpelDeck();
+	}
 }
