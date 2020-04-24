@@ -14,20 +14,15 @@ import java.util.HashMap;
 import java.util.stream.Collectors;
 
 import domein.*;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.geometry.VPos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -37,16 +32,14 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
-import javafx.stage.Stage;
-import javafx.scene.paint.Color;
 
 public class SpelScherm extends GridPane 
 {
 	private DomeinController dc = new DomeinController();
 	private List<String> namen;
 	private List<Speler> spelers;
-	private GridPane grdSpelerInformatie, grdSpeldeck;
+	private GridPane grdSpelerInformatie;
+	private GridPane grdSpeldeck;
 	private boolean isCardDrawn = false;
 	
 	private List<StackPane> rondeStapelsStacks = new ArrayList<StackPane>();
@@ -80,8 +73,12 @@ public class SpelScherm extends GridPane
 		}
 		catch (FileNotFoundException e)
 		{
-			e.printStackTrace();
-			//TODO: Error bericht
+			Alert alert = new Alert(AlertType.ERROR);
+			alert.setTitle("Files not found");
+			alert.setHeaderText(null);
+			alert.setContentText("Could not load one or more images at src/images.");
+
+			alert.showAndWait();
 		}
 		
 		for (int i = 0; i < namen.size(); i++)
