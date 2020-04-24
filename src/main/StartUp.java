@@ -22,6 +22,7 @@ public class StartUp extends Application {
 		WelkomScherm root = new WelkomScherm();
 		
 		Scene scene = new Scene(root, 500, 250);
+		scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
 		
 		primaryStage.setScene(scene);
 		

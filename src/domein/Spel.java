@@ -71,7 +71,14 @@ public class Spel
 
 	public void startNieuweRonde()
 	{
-		this.huidigeRonde = new Ronde(spelers);
+		if (spelDeck.size() >= 15)
+		{
+			this.huidigeRonde = new Ronde(spelers);
+		}
+		else
+		{
+			throw new IllegalStateException("Er kan geen nieuwe ronde gestart worden.");
+		}
 	}
 
 	public void legKaartBijStapel(int stapelnummer)
