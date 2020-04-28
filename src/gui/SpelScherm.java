@@ -60,18 +60,18 @@ public class SpelScherm extends GridPane
 	{
 		try
 		{
-			cards.put("back", new Image(new FileInputStream("src/images/kaart-back.png")));
-			cards.put("+2", new Image(new FileInputStream("src/images/kaart-+2.png")));
-			cards.put("blauw", new Image(new FileInputStream("src/images/kaart-blauw.png")));
-			cards.put("bruin", new Image(new FileInputStream("src/images/kaart-bruin.png")));
-			cards.put("geel", new Image(new FileInputStream("src/images/kaart-geel.png")));
-			cards.put("grijs", new Image(new FileInputStream("src/images/kaart-grijs.png")));
-			cards.put("groen", new Image(new FileInputStream("src/images/kaart-groen.png")));
-			cards.put("joker", new Image(new FileInputStream("src/images/kaart-joker.png")));
-			cards.put("oranje", new Image(new FileInputStream("src/images/kaart-oranje.png")));
-			cards.put("roze", new Image(new FileInputStream("src/images/kaart-roze.png")));
+			cards.put("back", new Image(getClass().getResourceAsStream("/images/kaart-back.png")));
+			cards.put("+2", new Image(getClass().getResourceAsStream("/images/kaart-+2.png")));
+			cards.put("blauw", new Image(getClass().getResourceAsStream("/images/kaart-blauw.png")));
+			cards.put("bruin", new Image(getClass().getResourceAsStream("/images/kaart-bruin.png")));
+			cards.put("geel", new Image(getClass().getResourceAsStream("/images/kaart-geel.png")));
+			cards.put("grijs", new Image(getClass().getResourceAsStream("/images/kaart-grijs.png")));
+			cards.put("groen", new Image(getClass().getResourceAsStream("/images/kaart-groen.png")));
+			cards.put("joker", new Image(getClass().getResourceAsStream("/images/kaart-joker.png")));
+			cards.put("oranje", new Image(getClass().getResourceAsStream("/images/kaart-oranje.png")));
+			cards.put("roze", new Image(getClass().getResourceAsStream("/images/kaart-roze.png")));
 		}
-		catch (FileNotFoundException e)
+		catch (Exception e)
 		{
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Files not found");
