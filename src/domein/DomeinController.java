@@ -57,6 +57,11 @@ public class DomeinController
 		spel.assignJoker(speler, nieuweKleur);
 	}
 	
+	public Speler getNextJokerOwner()
+	{
+		return spel.getNextJokerOwner();
+	}
+	
 	public List<Speler> getSpelers()
 	{
 		return spel.getSpelers();

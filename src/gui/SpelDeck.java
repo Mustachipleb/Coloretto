@@ -17,6 +17,7 @@ public class SpelDeck extends VBox
 	
 	private HBox hbCards;
 	private Label lblCardCount;
+	private Label lblStatusMessage;
 	private ImageView imvCardBack;
 	private ImageView imvDrawableCard;
 	
@@ -29,7 +30,8 @@ public class SpelDeck extends VBox
 		this.deckContents = deckContents;
 		isDrawingAllowed = true;
 		
-		lblCardCount = new Label(String.format("(%s)", deckContents.size()));
+		lblCardCount = new Label(String.format("%s cards left.", deckContents.size()));
+		lblStatusMessage = new Label();
 		hbCards = new HBox();
 		
 		imvCardBack = new ImageView(SpelScherm.getCardImages().get("back"));
@@ -61,11 +63,7 @@ public class SpelDeck extends VBox
 		hbCards.getChildren().add(imvCardBack);
 		this.getChildren().add(hbCards);
 		this.getChildren().add(lblCardCount);
-	}
-	
-	public void areAllDecksFull(List<SpelerKaartDisplay> deckCollection)
-	{
-		
+		this.getChildren().add(lblStatusMessage);
 	}
 	
 	public boolean isCardDrawn()
@@ -81,11 +79,20 @@ public class SpelDeck extends VBox
 	public void resetDrawableCard()
 	{
 		imvDrawableCard.setImage(SpelScherm.getCardImages().get("back"));
+		if (deckContents.size() < 15)
+			lblCardCount.setText(String.format("%s cards left. last round of the game!", deckContents.size()));
+		else
+			lblCardCount.setText(String.format("%s cards left.", deckContents.size()));
 		isCardDrawn = false;
 	}
 	
 	public void setDrawingAllowed(boolean isAllowed)
 	{
 		isDrawingAllowed = isAllowed;
+	}
+	
+	public void setStatusMessage(String message)
+	{
+		lblStatusMessage.setText(message);
 	}
 }

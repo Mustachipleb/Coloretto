@@ -93,6 +93,14 @@ public class Spel
 		getSpelerAanBeurt().geefStapelKaarten(huidigeRonde.neemStapel(huidigeRonde.getStapels().get(stapelnummer)));
 		huidigeRonde.getSpelersDieNogMogenSpelen().remove(getSpelerAanBeurt());
 		volgendeSpelerAanBeurt();
+		boolean isRoundOver = true;
+		for (Stapel stapel : getHuidigeRonde().getStapels())
+		{
+			if (stapel != null)
+				isRoundOver = false;
+		}
+		if (isRoundOver)
+			startNieuweRonde();
 	}
 
 	public boolean isLaatsteRonde() 
@@ -103,6 +111,18 @@ public class Spel
 	public void assignJoker(Speler speler, String nieuweKleur)
 	{
 		speler.assignJoker(nieuweKleur);
+	}
+	
+	public Speler getNextJokerOwner()
+	{
+		for (Speler speler : getSpelers())
+		{
+			if (speler.getKaarten().contains(new Kaart("joker")))
+			{
+				return speler;
+			}
+		}
+		return null;
 	}
 
 	public List<Speler> getSpelers()
