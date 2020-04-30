@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Speler 
 {
-
 	private String naam;
 	private List<Kaart> kaarten = new ArrayList<>();
 

@@ -62,8 +62,8 @@ public class DomeinController
 		return spel.getSpelers();
 	}
 	
-	public int getAantalKaartenOpSpelDeck()
+	public List<Kaart> getSpelDeck()
 	{
-		return spel.getAantalKaartenOpSpelDeck();
+		return spel.getSpelDeck();
 	}
 }

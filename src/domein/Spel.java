@@ -129,8 +129,8 @@ public class Spel
 			volgendeSpelerAanBeurt();
 	}
 
-	public int getAantalKaartenOpSpelDeck() 
+	public List<Kaart> getSpelDeck() 
 	{
-		return spelDeck.size();
+		return spelDeck;
 	}
 }
