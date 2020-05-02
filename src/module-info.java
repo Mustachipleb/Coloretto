@@ -5,7 +5,7 @@ module coloretto {
 
 	requires javafx.base;
 	requires transitive javafx.graphics;
-	requires javafx.controls;
+	requires transitive javafx.controls;
 	
 	opens gui to javafx.graphics;
 }

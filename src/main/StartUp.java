@@ -1,34 +1,44 @@
 package main;
 	
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 import javafx.scene.Scene;
+
+import java.util.List;
+
+import gui.SpelScherm;
 import gui.WelkomScherm;
 
 
-public class StartUp extends Application {
+public class StartUp extends Application
+{
+	Scene welkomScherm, spelScherm;
+	
 	@Override
 	public void start(Stage primaryStage) {
-		/*try {
-			BorderPane root = new BorderPane();
-			Scene scene = new Scene(root,400,400);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			primaryStage.show();
-		} catch(Exception e) {
-			e.printStackTrace();
-		}*/
 		WelkomScherm root = new WelkomScherm();
+		root.btnVerder.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				List<String> namen = root.checkAndTryGettingInput();
+				if (namen != null)
+				{
+					spelScherm = new Scene(new SpelScherm(namen), 850, 650);
+					primaryStage.setScene(spelScherm);
+				}
+			}
+		});
 		
-		Scene scene = new Scene(root, 500, 250);
-		scene.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
+		Scene welkomScherm = new Scene(root, 500, 250);
+		welkomScherm.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
 		
-		primaryStage.setScene(scene);
+		primaryStage.setScene(welkomScherm);
 		
 		primaryStage.setTitle("Coloretto - Geef aantal spelers");
 		primaryStage.show();
-		
-		
 	}
 	
 	public static void main(String[] args) {

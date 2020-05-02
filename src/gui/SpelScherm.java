@@ -60,6 +60,8 @@ public class SpelScherm extends GridPane
 			Platform.exit();
 		}
 		
+		setPrefSize(750, 650);
+		
 		cardStacks = new ArrayList<CardStack>();
 		playerCards = new ArrayList<SpelerKaartDisplay>();
 		
@@ -191,10 +193,6 @@ public class SpelScherm extends GridPane
 				{
 					dc.legKaartBijStapel(stack.getStackNumber());
 					spelDeck.resetDrawableCard();
-				}
-				else
-				{
-					//TODO: alert no card drawn
 				}
 			}
 			else if (!stack.isEmpty())
