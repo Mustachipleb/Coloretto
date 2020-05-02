@@ -3,7 +3,7 @@ package gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import domein.Kaart;
+import domein.Card;
 import javafx.geometry.Insets;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
@@ -37,7 +37,7 @@ public class CardStack extends StackPane
 		}
 	}
 	
-	public boolean tryAddCard(Kaart kaart)
+	public boolean tryAddCard(Card kaart)
 	{
 		if (amountOfNonBlankCards < 3)
 		{

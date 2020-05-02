@@ -25,12 +25,12 @@ import javafx.scene.text.FontWeight;
 
 public class SpelScherm extends GridPane
 {
-	private DomeinController dc = new DomeinController();
+	private DomainController dc = new DomainController();
 	private List<CardStack> cardStacks;
 	private SpelDeck spelDeck;
 	private List<SpelerKaartDisplay> playerCards;
 	
-	private List<Speler> spelers;
+	private List<Player> spelers;
 	
 	private static final Map<String, Image> cards = new HashMap<String, Image>();
 	
@@ -66,8 +66,8 @@ public class SpelScherm extends GridPane
 		playerCards = new ArrayList<SpelerKaartDisplay>();
 		
 		
-		dc.startNieuwSpel();
-		dc.maakSpelersAan(namen);
+		dc.startNewSession();
+		dc.createPlayers(namen);
 		this.spelers = dc.getSpelers();
 		dc.startNieuweRonde();
 		this.setAlignment(Pos.CENTER);
@@ -97,7 +97,7 @@ public class SpelScherm extends GridPane
 		Label lblKaartenSpelers = new Label("Kaarten:");
 		lblKaartenSpelers.setFont(Font.font("Tahoma", FontWeight.BOLD, Font.getDefault().getSize() * 1.7));
 		vboxPlayerCardDisplays.getChildren().add(lblKaartenSpelers);
-		for (Speler player : spelers)
+		for (Player player : spelers)
 		{
 			SpelerKaartDisplay cardDisplay = new SpelerKaartDisplay(player);
 			playerCards.add(cardDisplay);
@@ -122,7 +122,7 @@ public class SpelScherm extends GridPane
 		{
 			if (dc.getNextJokerOwner() != null)
 			{
-				Speler speler = dc.getNextJokerOwner();
+				Player speler = dc.getNextJokerOwner();
 				List<String> choices = new ArrayList<>();
 				choices.add("Blauw");
 				choices.add("Bruin");
@@ -142,9 +142,9 @@ public class SpelScherm extends GridPane
 			}
 		}
 		
-		List<Speler> winnaars = new ArrayList<Speler>();
+		List<Player> winnaars = new ArrayList<Player>();
 		int maxScore = 0;
-		for (Speler speler : spelers)
+		for (Player speler : spelers)
 		{
 			if (speler.berekenScore() > maxScore)
 			{
@@ -188,7 +188,7 @@ public class SpelScherm extends GridPane
 			boolean isGameOver = false;
 			if (spelDeck.isCardDrawn())
 			{
-				Kaart card = spelDeck.peekCard();
+				Card card = spelDeck.peekCard();
 				if (stack.tryAddCard(card))
 				{
 					dc.legKaartBijStapel(stack.getStackNumber());

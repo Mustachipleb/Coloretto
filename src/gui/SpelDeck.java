@@ -2,7 +2,7 @@ package gui;
 
 import java.util.List;
 
-import domein.Kaart;
+import domein.Card;
 
 import javafx.event.EventHandler;
 import javafx.scene.control.Label;
@@ -13,7 +13,7 @@ import javafx.scene.layout.VBox;
 
 public class SpelDeck extends VBox
 {
-	private List<Kaart> deckContents;
+	private List<Card> deckContents;
 	
 	private HBox hbCards;
 	private Label lblCardCount;
@@ -25,7 +25,7 @@ public class SpelDeck extends VBox
 	private boolean isDrawingAllowed;
 	private static final int CARD_WIDTH = 200;
 	
-	public SpelDeck(List<Kaart> deckContents)
+	public SpelDeck(List<Card> deckContents)
 	{
 		this.deckContents = deckContents;
 		isDrawingAllowed = true;
@@ -71,7 +71,7 @@ public class SpelDeck extends VBox
 		return isCardDrawn;
 	}
 	
-	public Kaart peekCard()
+	public Card peekCard()
 	{
 		return deckContents.get(0);
 	}

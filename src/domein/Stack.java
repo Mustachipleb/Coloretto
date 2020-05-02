@@ -2,20 +2,20 @@ package domein;
 
 import java.util.*;
 
-public class Stapel 
+public class Stack 
 {
 
-	private List<Kaart> kaarten;
+	private List<Card> kaarten;
 	private int nummer;
 	private static final int MAX_SIZE = 3;
 	
-	public Stapel(int nummer) 
+	public Stack(int nummer) 
 	{
 		this.kaarten = new ArrayList<>();
 		this.nummer = nummer;
 	}
 
-	public List<Kaart> getKaarten() 
+	public List<Card> getKaarten() 
 	{
 		return kaarten;
 	}
@@ -30,7 +30,7 @@ public class Stapel
 		return getKaarten().isEmpty();
 	}
 	
-	public void voegKaartToe(Kaart k) 
+	public void voegKaartToe(Card k) 
 	{
 		if (getKaarten().size() >= MAX_SIZE)
 			throw new IllegalStateException("De stapel mag maar " + MAX_SIZE + " kaarten bevatten.");

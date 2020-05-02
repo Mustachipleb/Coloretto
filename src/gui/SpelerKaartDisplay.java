@@ -5,8 +5,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import domein.Kaart;
-import domein.Speler;
+import domein.Card;
+import domein.Player;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 
 public class SpelerKaartDisplay extends VBox
 {
-	private Speler speler;
+	private Player speler;
 	
 	private BorderPane bpSpelerInfo;
 	private Label lblName;
@@ -24,7 +24,7 @@ public class SpelerKaartDisplay extends VBox
 	
 	private FlowPane flwKaarten;
 	
-	public SpelerKaartDisplay(Speler speler)
+	public SpelerKaartDisplay(Player speler)
 	{
 		this.speler = speler;
 		setMinWidth(100);
@@ -49,9 +49,9 @@ public class SpelerKaartDisplay extends VBox
 	public void updateCards()
 	{
 		flwKaarten.getChildren().clear();
-		List<Kaart> kaarten = speler.getKaarten();
-		Set<Kaart> distinct = new HashSet<Kaart>(kaarten);
-		for (Kaart kaart : distinct)
+		List<Card> kaarten = speler.getKaarten();
+		Set<Card> distinct = new HashSet<Card>(kaarten);
+		for (Card kaart : distinct)
 		{
 			
 			Image x = SpelScherm.getCardImages().get(kaart.getKleur());

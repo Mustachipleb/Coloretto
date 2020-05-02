@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Kaart
+public class Card
 {
 
 	private String kleur;
@@ -12,7 +12,7 @@ public class Kaart
 			Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze", "+2", "joker")
 	);
 
-	public Kaart(String kleur) 
+	public Card(String kleur) 
 	{
 		setKleur(kleur);
 	}
@@ -41,9 +41,9 @@ public class Kaart
 	@Override
 	public boolean equals(Object obj)
 	{
-		if (!(obj instanceof Kaart)) return false;
+		if (!(obj instanceof Card)) return false;
 		if (obj == this) return true;
-		return this.getKleur().equals(((Kaart) obj).getKleur());
+		return this.getKleur().equals(((Card) obj).getKleur());
 	}
 	
 	@Override

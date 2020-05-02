@@ -2,17 +2,17 @@ package domein;
 
 import java.util.*;
 
-public class Speler 
+public class Player 
 {
 	private String naam;
-	private List<Kaart> kaarten = new ArrayList<>();
+	private List<Card> kaarten = new ArrayList<>();
 
-	public Speler(String naam) 
+	public Player(String naam) 
 	{
 		setNaam(naam);
 	}
 
-	public List<Kaart> getKaarten() 
+	public List<Card> getKaarten() 
 	{
 		return this.kaarten;
 	}
@@ -27,7 +27,7 @@ public class Speler
 		this.naam = naam;
 	}
 	
-	public void geefStapelKaarten(Stapel d)
+	public void geefStapelKaarten(Stack d)
 	{
 		for (int i = 0; i < d.getKaarten().size(); i++) 
 		{
@@ -38,12 +38,12 @@ public class Speler
 	public int berekenScore()
 	{
 		int totaalScore = 0;
-		Set<Kaart> distinct = new HashSet<>(getKaarten());
+		Set<Card> distinct = new HashSet<>(getKaarten());
 		
-		distinct.remove(new Kaart("joker"));
+		distinct.remove(new Card("joker"));
 		
 		List<Integer> aantalKaartenPerKleur = new ArrayList<>();
-		for (Kaart k : distinct)
+		for (Card k : distinct)
 		{
 			if ("+2".equals(k.getKleur()))
 				totaalScore += (2 * Collections.frequency(getKaarten(), k));
@@ -76,7 +76,7 @@ public class Speler
 	
 	public void assignJoker(String nieuweKleur)
 	{
-		getKaarten().remove(new Kaart("joker"));
-		getKaarten().add(new Kaart(nieuweKleur));
+		getKaarten().remove(new Card("joker"));
+		getKaarten().add(new Card(nieuweKleur));
 	}
 }

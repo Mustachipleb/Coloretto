@@ -2,45 +2,45 @@ package domein;
 
 import java.util.*;
 
-public class Spel 
+public class Session 
 {
-	private List<Speler> spelers;
-	private Speler spelerAanBeurt;
-	private List<Kaart> spelDeck = new ArrayList<>();
-	private Ronde huidigeRonde;
+	private List<Player> spelers;
+	private Player spelerAanBeurt;
+	private List<Card> spelDeck = new ArrayList<>();
+	private Round huidigeRonde;
 	private static final List<String> KLEUREN = new ArrayList<>(Arrays.asList("oranje", "blauw", "bruin", "geel", "grijs", "groen", "roze"));
 	private static final int AANTAL_JOKERS = 3;
 	private static final int AANTAL_PLUS2 = 10;
 	private static final int AANTAL_KAARTEN_PER_KLEUR = 9;
 
-	public Spel()
+	public Session()
 	{
 		for (String kleur : getKleuren())
 			for (int i = 0; i < AANTAL_KAARTEN_PER_KLEUR; i++)
-				spelDeck.add(new Kaart(kleur));
+				spelDeck.add(new Card(kleur));
 		for (int i = 0; i < AANTAL_PLUS2; i++)
-			spelDeck.add(new Kaart("+2"));
+			spelDeck.add(new Card("+2"));
 		for (int i = 0; i < AANTAL_JOKERS; i++)
-			spelDeck.add(new Kaart("joker"));
+			spelDeck.add(new Card("joker"));
 		Collections.shuffle(spelDeck);
 	}
 
-	public Ronde getHuidigeRonde()
+	public Round getHuidigeRonde()
 	{
 		return this.huidigeRonde;
 	}
 	
-	public Kaart peekKaart()
+	public Card peekKaart()
 	{
 		return spelDeck.get(0);
 	}
 
-	public Speler getSpelerAanBeurt() 
+	public Player getSpelerAanBeurt() 
 	{
 		return this.spelerAanBeurt;
 	}
 
-	private void setSpelerAanBeurt(Speler spelerAanBeurt) 
+	private void setSpelerAanBeurt(Player spelerAanBeurt) 
 	{
 		this.spelerAanBeurt = spelerAanBeurt;
 	}
@@ -50,7 +50,7 @@ public class Spel
 		return KLEUREN;
 	}
 
-	public void maakSpelersAan(List<String> namen)
+	public void createPlayers(List<String> namen)
 	{
 		spelers = new ArrayList<>();
 		Random rnd = new Random();
@@ -59,8 +59,8 @@ public class Spel
 		for (String naam : namen)
 		{
 			int randomIndex = rnd.nextInt(unassignedKleuren.size());
-			Speler s = new Speler(naam);
-			Kaart k = new Kaart(unassignedKleuren.get(randomIndex));
+			Player s = new Player(naam);
+			Card k = new Card(unassignedKleuren.get(randomIndex));
 			s.getKaarten().add(k);
 			spelDeck.remove(k);
 			unassignedKleuren.remove(randomIndex);
@@ -73,7 +73,7 @@ public class Spel
 	{
 		if (spelDeck.size() >= 15)
 		{
-			this.huidigeRonde = new Ronde(spelers);
+			this.huidigeRonde = new Round(spelers);
 		}
 		else
 		{
@@ -94,7 +94,7 @@ public class Spel
 		huidigeRonde.getSpelersDieNogMogenSpelen().remove(getSpelerAanBeurt());
 		volgendeSpelerAanBeurt();
 		boolean isRoundOver = true;
-		for (Stapel stapel : getHuidigeRonde().getStapels())
+		for (Stack stapel : getHuidigeRonde().getStapels())
 		{
 			if (stapel != null)
 				isRoundOver = false;
@@ -108,16 +108,16 @@ public class Spel
 		return spelDeck.size() <= 15;
 	}
 
-	public void assignJoker(Speler speler, String nieuweKleur)
+	public void assignJoker(Player speler, String nieuweKleur)
 	{
 		speler.assignJoker(nieuweKleur);
 	}
 	
-	public Speler getNextJokerOwner()
+	public Player getNextJokerOwner()
 	{
-		for (Speler speler : getSpelers())
+		for (Player speler : getSpelers())
 		{
-			if (speler.getKaarten().contains(new Kaart("joker")))
+			if (speler.getKaarten().contains(new Card("joker")))
 			{
 				return speler;
 			}
@@ -125,7 +125,7 @@ public class Spel
 		return null;
 	}
 
-	public List<Speler> getSpelers()
+	public List<Player> getSpelers()
 	{
 		return this.spelers;
 	}
@@ -149,7 +149,7 @@ public class Spel
 			volgendeSpelerAanBeurt();
 	}
 
-	public List<Kaart> getSpelDeck() 
+	public List<Card> getSpelDeck() 
 	{
 		return spelDeck;
 	}
