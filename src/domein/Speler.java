@@ -4,7 +4,6 @@ import java.util.*;
 
 public class Speler 
 {
-
 	private String naam;
 	private List<Kaart> kaarten = new ArrayList<>();
 
@@ -40,11 +39,9 @@ public class Speler
 	{
 		int totaalScore = 0;
 		Set<Kaart> distinct = new HashSet<>(getKaarten());
-		/*
-		 * if (distinct.contains(new Kaart("joker"))) throw new
-		 * IllegalStateException("Er zouden geen jokers meer mogen zijn.");
-		 */
-
+		
+		distinct.remove(new Kaart("joker"));
+		
 		List<Integer> aantalKaartenPerKleur = new ArrayList<>();
 		for (Kaart k : distinct)
 		{
