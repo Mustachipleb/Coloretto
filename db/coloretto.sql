@@ -35,19 +35,25 @@ INSERT INTO `Card` (idCard, name)
 	(5, 'groen'),
 	(6, 'joker'),
 	(7, 'oranje'),
-	(8, 'roze')
-;
-
+	(8, 'roze'),
+	(9, '+2');
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Player`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Coloretto`.`Player` (
   `idPlayer` INT NOT NULL,
-  `Name` VARCHAR(45) NOT NULL,
+  `name` VARCHAR(45) NOT NULL,
+  `isNext` TINYINT(0) NOT NULL,
   PRIMARY KEY (`idPlayer`))
 ENGINE = InnoDB;
 
+INSERT INTO `Player` (idPlayer, name, isNext)
+	VALUES(0, 'Nicolas', 0),
+    (1, 'Manu', 0),
+    (2, 'Matheis', 1),
+    (3, 'Fons', 0),
+    (4, 'Glen', 0);
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Player/Card`
@@ -58,6 +64,16 @@ CREATE TABLE IF NOT EXISTS `Coloretto`.`Player/Card` (
   `amount` INT NOT NULL)
 ENGINE = InnoDB;
 
+INSERT INTO `Player/Card` (idPlayer, idCard, amount)
+	VALUES(0, 1, 5),
+    (0, 2, 4),
+    (1, 2, 3),
+    (1, 3, 2),
+    (2, 3, 1),
+    (2, 3, 2),
+    (3, 4, 2),
+    (4, 4, 5)
+;
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Deck`
@@ -67,6 +83,9 @@ CREATE TABLE IF NOT EXISTS `Coloretto`.`Deck` (
   PRIMARY KEY (`idDeck`))
 ENGINE = InnoDB;
 
+INSERT INTO `Deck` (idDeck)
+	VALUES(0)
+;
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Deck/Card`
@@ -77,6 +96,16 @@ CREATE TABLE IF NOT EXISTS `Coloretto`.`Deck/Card` (
   `amount` INT NOT NULL)
 ENGINE = InnoDB;
 
+INSERT INTO `Deck/Card` (idDeck, idCard, amount)
+	VALUES(0, 1, 7),
+    (0, 2, 7),
+    (0, 3, 7),
+    (0, 4, 7),
+    (0, 5, 7),
+    (0, 6, 3),
+    (0, 7, 7),
+    (0, 8, 10)
+;
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Stack`
@@ -87,6 +116,12 @@ CREATE TABLE IF NOT EXISTS `Coloretto`.`Stack` (
   PRIMARY KEY (`idStack`))
 ENGINE = InnoDB;
 
+INSERT INTO `Stack` (idStack, isTaken)
+	VALUES(0, 0),
+    (1, 0),
+    (2, 1),
+    (3, 0),
+    (4, 1);
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Stack/Card`
@@ -97,6 +132,11 @@ CREATE TABLE IF NOT EXISTS `Coloretto`.`Stack/Card` (
   `amount` INT NOT NULL)
 ENGINE = InnoDB;
 
+INSERT INTO `Stack/Card` (idStack, idCard, amount)
+	VALUES(0, 1, 2),
+    (0, 2, 1),
+    (1, 3, 3),
+    (3, 5, 1);
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
