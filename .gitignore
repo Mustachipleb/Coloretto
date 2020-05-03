@@ -13,3 +13,4 @@ vpproject/.vpprefdata
 vpproject/tmp
 vpproject/.lock
 .vp
+mysql-connector-java-8.0.15.jar
