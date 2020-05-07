@@ -18,7 +18,9 @@ import javafx.scene.text.FontWeight;
 public class WelkomScherm extends GridPane {
 	private List<TextField> textFields = new ArrayList<TextField>();
 	public Button btnVerder;
-
+	public Button btnHighScores;
+	public Button btnHervat;
+	
 	public WelkomScherm() {
 		Font titelFont = Font.font("Tahoma", FontWeight.NORMAL, Font.getDefault().getSize() * 1.3);
 		this.setAlignment(Pos.CENTER);
@@ -30,12 +32,16 @@ public class WelkomScherm extends GridPane {
 		lblWelkom.setFont(titelFont);
 		this.add(lblWelkom, 0, 0, 2, 1);
 
+		
 		ComboBox<Integer> cmbAantalSpelers = new ComboBox<Integer>(FXCollections.observableArrayList(4, 5));
 		this.add(cmbAantalSpelers, 0, 1);
 
 		GridPane grdSpelerNamen = new GridPane();
 		this.add(grdSpelerNamen, 0, 2);
 
+
+		
+		
 		Label lblNamen = new Label("Namen van de spelers:");
 		lblNamen.setFont(titelFont);
 		grdSpelerNamen.add(lblNamen, 0, 0, 2, 1);
@@ -47,7 +53,12 @@ public class WelkomScherm extends GridPane {
 			grdSpelerNamen.add(txtNaam, 1, i + 1);
 			textFields.add(txtNaam);
 		}
-
+		btnHighScores = new Button("High Scores");
+		this.add(btnHighScores, 1, 3);
+		
+		btnHervat = new Button("Hervat spel");
+		this.add(btnHervat, 2, 3);
+		
 		btnVerder = new Button("Verder");
 		this.add(btnVerder, 0, 3);
 

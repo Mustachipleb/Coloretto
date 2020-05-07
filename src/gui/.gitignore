@@ -2,3 +2,9 @@
 /WelkomScherm.class
 /WelkomScherm$1.class
 /WelkomScherm$2.class
+/CardStack.class
+/SpelDeck$1.class
+/SpelDeck.class
+/SpelScherm$CardStackEventHandler.class
+/SpelerKaartDisplay$CardView.class
+/SpelerKaartDisplay.class

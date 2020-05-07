@@ -14,8 +14,10 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceDialog;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -75,6 +77,27 @@ public class SpelScherm extends GridPane
 		this.setVgap(10);
 		this.setPadding(new Insets(25, 25, 25, 25));
 		
+		
+		Button Instructions = new Button("Instructies");
+		this.add(Instructions, 3, 2);
+		Instructions.setMinWidth(100);
+		Instructions.setPrefSize(12, 20);
+		Instructions.setOnMouseClicked((MouseEvent event) -> {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Information Dialog");
+			alert.setHeaderText("The 2 -5 players draw cards from a card supply in the middle of the table.\r\n" + 
+					"During the game, the players try to specialize in a few colors, because at the end of \r\n" + 
+					"the game, a player can score plus points for only 3 colors; the rest score minus points.\r\n" + 
+					"The more cards a player has of a color, the more points he scores.\r\n" + 
+					"The player with the most points wins.");
+
+			Image image = new Image(getClass().getResourceAsStream("/images/kaart-punten.png"));
+			ImageView imageView = new ImageView(image);
+			alert.setGraphic(imageView);
+			
+			alert.showAndWait();
+		});
+		
 		// Setup van linkerdeel van het scherm (Informatie over de spelers en hun kaarten.)
 		GridPane grdSpel = new GridPane();
 		spelDeck = new SpelDeck(dc.getSpelDeck());
@@ -108,7 +131,11 @@ public class SpelScherm extends GridPane
 		this.add(grdSpel, 0, 0);
 		
 		String spelerAanBeurt = dc.getSpelerAanBeurt().getNaam();
-		spelDeck.setStatusMessage(String.format("It's %s turn.", spelerAanBeurt.endsWith("s") ? spelerAanBeurt + "'" : spelerAanBeurt + "'s"));
+		
+		
+		spelDeck.setStatusMessage(String.format("It's %s turn.", spelerAanBeurt.endsWith("s") ? spelerAanBeurt + "'" : spelerAanBeurt + "'s"));		
+	
+
 	}
 	
 	public static Map<String, Image> getCardImages()
