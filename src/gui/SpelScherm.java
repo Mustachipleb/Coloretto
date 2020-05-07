@@ -1,5 +1,6 @@
 package gui;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import persistance.GameMapper;
 
 public class SpelScherm extends GridPane
 {
@@ -51,6 +53,7 @@ public class SpelScherm extends GridPane
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			Alert alert = new Alert(AlertType.ERROR);
 			alert.setTitle("Fatal - Files not found");
 			alert.setHeaderText(null);
@@ -68,8 +71,8 @@ public class SpelScherm extends GridPane
 		
 		dc.startNieuwSpel();
 		dc.maakSpelersAan(namen);
-		this.spelers = dc.getSpelers();
 		dc.startNieuweRonde();
+		this.spelers = dc.getSpelers();
 		this.setAlignment(Pos.CENTER);
 		this.setHgap(10);
 		this.setVgap(10);
@@ -109,6 +112,12 @@ public class SpelScherm extends GridPane
 		
 		String spelerAanBeurt = dc.getSpelerAanBeurt().getNaam();
 		spelDeck.setStatusMessage(String.format("It's %s turn.", spelerAanBeurt.endsWith("s") ? spelerAanBeurt + "'" : spelerAanBeurt + "'s"));
+	}
+	
+	public SpelScherm()
+	{
+		this(new ArrayList<String>());
+		resumeGame();
 	}
 	
 	public static Map<String, Image> getCardImages()
@@ -241,6 +250,54 @@ public class SpelScherm extends GridPane
 			}
 			
 			event.consume();
+		}
+	}
+	
+	public class ResumeGameEventHandler implements EventHandler<MouseEvent>
+	{
+		@Override
+		public void handle(MouseEvent event)
+		{
+			try
+			{
+				dc = GameMapper.retrieveGame(0);
+				for (int i = 0; 0 < dc.getHuidigeRonde().getStapels().size(); i++)
+				{
+					Stapel stack = dc.getHuidigeRonde().getStapels().get(0);
+					CardStack cs = cardStacks.get(i);
+					for (Kaart k : stack.getKaarten())
+					{
+						cs.tryAddCard(k);
+					}
+				}
+			}
+			catch (SQLException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void resumeGame()
+	{
+		try
+		{
+			dc = GameMapper.retrieveGame(0);
+			for (int i = 0; 0 < dc.getHuidigeRonde().getStapels().size(); i++)
+			{
+				Stapel stack = dc.getHuidigeRonde().getStapels().get(0);
+				CardStack cs = cardStacks.get(i);
+				for (Kaart k : stack.getKaarten())
+				{
+					cs.tryAddCard(k);
+				}
+			}
+		}
+		catch (SQLException e)
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }

@@ -20,13 +20,13 @@ USE `Coloretto` ;
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Card` (
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Cards` (
   `idCard` INT NOT NULL,
   `name` VARCHAR(10) NULL,
   PRIMARY KEY (`idCard`))
 ENGINE = InnoDB;
 
-INSERT INTO `Card` (idCard, name)
+INSERT INTO `Cards` (idCard, name)
 	VALUES(0, 'back'),
 	(1, 'blauw'),
 	(2, 'bruin'),
@@ -41,30 +41,32 @@ INSERT INTO `Card` (idCard, name)
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Player`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Player` (
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Players` (
   `idPlayer` INT NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `isNext` TINYINT(0) NOT NULL,
-  PRIMARY KEY (`idPlayer`))
+  `idGame` INT NOT NULL,
+  PRIMARY KEY (`idPlayer`),
+  FOREIGN KEY (idGame) REFERENCES Decks(idGame))
 ENGINE = InnoDB;
 
-INSERT INTO `Player` (idPlayer, name, isNext)
-	VALUES(0, 'Nicolas', 0),
-    (1, 'Manu', 0),
-    (2, 'Matheis', 1),
-    (3, 'Fons', 0),
-    (4, 'Glen', 0);
+INSERT INTO `Players` (idPlayer, name, isNext, idGame)
+	VALUES(0, 'Nicolas', 0, 0),
+    (1, 'Manu', 0, 0),
+    (2, 'Matheis', 1, 0),
+    (3, 'Fons', 0, 0),
+    (4, 'Glen', 0, 0);
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Player/Card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Player/Card` (
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Players/Cards` (
   `idPlayer` INT NOT NULL,
   `idCard` INT NOT NULL,
   `amount` INT NOT NULL)
 ENGINE = InnoDB;
 
-INSERT INTO `Player/Card` (idPlayer, idCard, amount)
+INSERT INTO `Players/Cards` (idPlayer, idCard, amount)
 	VALUES(0, 1, 5),
     (0, 2, 4),
     (1, 2, 3),
@@ -78,61 +80,40 @@ INSERT INTO `Player/Card` (idPlayer, idCard, amount)
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Deck`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Deck` (
-  `idDeck` INT NOT NULL,
-  PRIMARY KEY (`idDeck`))
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Games` (
+  `idGame` INT NOT NULL,
+  PRIMARY KEY (`idGame`))
 ENGINE = InnoDB;
 
-INSERT INTO `Deck` (idDeck)
+INSERT INTO `Games` (idGame)
 	VALUES(0)
 ;
 
--- -----------------------------------------------------
--- Table `Coloretto`.`Deck/Card`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Deck/Card` (
-  `idDeck` INT NOT NULL,
-  `idCard` INT NOT NULL,
-  `amount` INT NOT NULL)
-ENGINE = InnoDB;
-
-INSERT INTO `Deck/Card` (idDeck, idCard, amount)
-	VALUES(0, 1, 7),
-    (0, 2, 7),
-    (0, 3, 7),
-    (0, 4, 7),
-    (0, 5, 7),
-    (0, 6, 3),
-    (0, 7, 7),
-    (0, 8, 10)
-;
-
--- -----------------------------------------------------
--- Table `Coloretto`.`Stack`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Stack` (
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Stacks` (
   `idStack` INT NOT NULL,
   `isTaken` TINYINT(0) NOT NULL,
-  PRIMARY KEY (`idStack`))
+  `idGame` INT NOT NULL,
+  PRIMARY KEY (`idStack`),
+  FOREIGN KEY (idGame) REFERENCES Games(idGame))
 ENGINE = InnoDB;
 
-INSERT INTO `Stack` (idStack, isTaken)
-	VALUES(0, 0),
-    (1, 0),
-    (2, 1),
-    (3, 0),
-    (4, 1);
+INSERT INTO `Stacks` (idStack, isTaken, idGame)
+	VALUES(0, 0, 0),
+    (1, 0, 0),
+    (2, 1, 0),
+    (3, 0, 0),
+    (4, 1, 0);
 
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Stack/Card`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Coloretto`.`Stack/Card` (
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Stacks/Cards` (
   `idStack` INT NOT NULL,
   `idCard` INT NOT NULL,
   `amount` INT NOT NULL)
 ENGINE = InnoDB;
 
-INSERT INTO `Stack/Card` (idStack, idCard, amount)
+INSERT INTO `Stacks/Cards` (idStack, idCard, amount)
 	VALUES(0, 1, 2),
     (0, 2, 1),
     (1, 3, 3),

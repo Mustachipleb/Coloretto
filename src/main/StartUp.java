@@ -4,13 +4,17 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import persistance.GameMapper;
 import javafx.scene.Scene;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import domein.DomeinController;
 import gui.SpelScherm;
 import gui.WelkomScherm;
 
@@ -18,9 +22,7 @@ import gui.WelkomScherm;
 public class StartUp extends Application
 {
 	Scene welkomScherm, spelScherm;
-	
-	private static final String JDBC_URL = "jdbc:mysql://127.0.0.1:3306/coloretto?user=user&password=NFohFZx3Y3L7AH/&serverTimezone=UTC&useSSL=false";
-	
+		
 	@Override
 	public void start(Stage primaryStage) {
 		WelkomScherm root = new WelkomScherm();
@@ -36,16 +38,6 @@ public class StartUp extends Application
 				}
 			}
 		});
-		
-		try (Connection conn = DriverManager.getConnection(JDBC_URL))
-		{
-			System.out.println("U good");
-		}
-		catch (SQLException e)
-		{
-			e.printStackTrace();
-		}
-		
 		
 		Scene welkomScherm = new Scene(root, 500, 250);
 		welkomScherm.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());

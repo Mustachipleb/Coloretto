@@ -71,4 +71,32 @@ public class DomeinController
 	{
 		return spel.getSpelDeck();
 	}
+	
+	public void resumeGame(List<Speler> players, List<Stapel> stacks, Speler playerNext)
+	{
+		startNieuwSpel();
+		spel.getSpelers().clear();
+		spel.getSpelers().addAll(players);
+		startNieuweRonde();
+		spel.getHuidigeRonde().getStapels().clear();
+		spel.getHuidigeRonde().getStapels().addAll(stacks);
+		spel.setSpelerAanBeurt(playerNext);
+		
+		for (Speler player : players)
+		{
+			for (Kaart card : player.getKaarten())
+			{
+				spel.getSpelDeck().remove(card);
+			}
+		}
+		
+		for (Stapel stack : stacks)
+		{
+			for (Kaart card : stack.getKaarten())
+			{
+				if (card != null)
+					spel.getSpelDeck().remove(card);
+			}
+		}
+	}
 }

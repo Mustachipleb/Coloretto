@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Spel 
 {
-	private List<Speler> spelers;
+	private List<Speler> spelers = new ArrayList<>();
 	private Speler spelerAanBeurt;
 	private List<Kaart> spelDeck = new ArrayList<>();
 	private Ronde huidigeRonde;
@@ -40,7 +40,7 @@ public class Spel
 		return this.spelerAanBeurt;
 	}
 
-	private void setSpelerAanBeurt(Speler spelerAanBeurt) 
+	public void setSpelerAanBeurt(Speler spelerAanBeurt) 
 	{
 		this.spelerAanBeurt = spelerAanBeurt;
 	}
@@ -52,7 +52,6 @@ public class Spel
 
 	public void maakSpelersAan(List<String> namen)
 	{
-		spelers = new ArrayList<>();
 		Random rnd = new Random();
 		List<String> unassignedKleuren = getKleuren();
 
