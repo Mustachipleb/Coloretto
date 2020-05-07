@@ -39,6 +39,20 @@ public class StartUp extends Application
 			}
 		});
 		
+		root.btnHervat.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) 
+			{
+				try {
+					spelScherm = new Scene(new SpelScherm(GameMapper.retrieveGame(0)), 850, 650);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				primaryStage.setScene(spelScherm);
+			}
+		});
+		
 		Scene welkomScherm = new Scene(root, 500, 250);
 		welkomScherm.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
 		

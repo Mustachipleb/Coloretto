@@ -21,32 +21,6 @@ public class GameMapper
 {
 	private static ConnectionManager manager = new ConnectionManager();
 	
-	public static void addGame(Spel spel)
-	{
-		try(Connection conn = manager.getConnection())
-		{
-            PreparedStatement queryNieuweGebruiker = conn.prepareStatement("INSERT INTO players(idPlayer) VALUES (?, ?)");
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static void removeGame(Spel spel)
-	{
-		try(Connection conn = manager.getConnection())
-		{
-            PreparedStatement queryNieuweGebruiker = conn.prepareStatement("INSERT INTO players(idPlayer) VALUES (?, ?)");
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public static DomeinController retrieveGame(int gameId) throws SQLException
 	{
 		Connection conn = manager.getConnection();
@@ -108,6 +82,11 @@ public class GameMapper
         	stackNo++;
         	s.getKaarten().addAll(stack.getValue());
         	stacks.add(s);
+        }
+        
+        for (int i = stackNo; i < players.size(); i++)
+        {
+        	stacks.add(new Stapel(i));
         }
         
         dc.resumeGame(players, stacks, playerNext);
