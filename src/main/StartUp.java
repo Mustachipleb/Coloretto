@@ -4,10 +4,17 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.stage.Stage;
+import persistance.GameMapper;
 import javafx.scene.Scene;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
+import domein.DomeinController;
 import gui.SpelScherm;
 import gui.WelkomScherm;
 
@@ -15,7 +22,7 @@ import gui.WelkomScherm;
 public class StartUp extends Application
 {
 	Scene welkomScherm, spelScherm;
-	
+		
 	@Override
 	public void start(Stage primaryStage) {
 		WelkomScherm root = new WelkomScherm();

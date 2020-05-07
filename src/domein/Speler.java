@@ -11,6 +11,12 @@ public class Speler
 	{
 		setNaam(naam);
 	}
+	
+	public Speler(String name, List<Kaart> cards)
+	{
+		setNaam(name);
+		this.kaarten = cards;
+	}
 
 	public List<Kaart> getKaarten() 
 	{

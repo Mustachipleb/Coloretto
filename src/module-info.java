@@ -6,6 +6,7 @@ module coloretto {
 	requires javafx.base;
 	requires transitive javafx.graphics;
 	requires transitive javafx.controls;
+	requires java.sql;
 	
 	opens gui to javafx.graphics;
 }
