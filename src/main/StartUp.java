@@ -91,7 +91,7 @@ public class StartUp extends Application
 				alert.showAndWait();
 			}
 		});
-		
+    
 		Scene welkomScherm = new Scene(root, 500, 250);
 		welkomScherm.getStylesheets().add(getClass().getResource("/css/main.css").toExternalForm());
 		

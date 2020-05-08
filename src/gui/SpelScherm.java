@@ -1,6 +1,7 @@
 package gui;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -42,7 +43,6 @@ public class SpelScherm extends GridPane
 		dc.maakSpelersAan(namen);
 		dc.startNieuweRonde();
 		initialise();
-
 	}
 	
 	public SpelScherm(DomeinController dc)
@@ -75,7 +75,7 @@ public class SpelScherm extends GridPane
 				
 				ChoiceDialog<String> dialog = new ChoiceDialog<>("Blauw", choices);
 				dialog.setTitle("Einde Spel");
-				dialog.setHeaderText(String.format("%s, welke kleur wil je dat één van je jokers wordt?", speler.getNaam()));
+				dialog.setHeaderText(String.format("%s, welke kleur wil je dat Ã©Ã©n van je jokers wordt?", speler.getNaam()));
 				dialog.setContentText(null);
 
 				Optional<String> result = dialog.showAndWait();
@@ -200,7 +200,7 @@ public class SpelScherm extends GridPane
 	
 	private void initialise()
 	{
-		try
+		for (int i = 0; i < dc.getHuidigeRonde().getStapels().size(); i++)
 		{
 			cards.put("back", new Image(getClass().getResourceAsStream("/images/kaart-back.png")));
 			cards.put("+2", new Image(getClass().getResourceAsStream("/images/kaart-+2.png")));
@@ -292,6 +292,6 @@ public class SpelScherm extends GridPane
 		String spelerAanBeurt = dc.getSpelerAanBeurt().getNaam();
 		
 		
-		spelDeck.setStatusMessage(String.format("It's %s turn.", spelerAanBeurt.endsWith("s") ? spelerAanBeurt + "'" : spelerAanBeurt + "'s"));		
+		spelDeck.setStatusMessage(String.format("It's %s turn.", spelerAanBeurt.endsWith("s") ? spelerAanBeurt + "'" : spelerAanBeurt + "'s"));
 	}
 }

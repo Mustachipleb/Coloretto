@@ -82,6 +82,11 @@ public class GameMapper
         	stacks.add(s);
         }
         
+        for (int i = stackNo; i < players.size(); i++)
+        {
+        	stacks.add(new Stapel(i));
+        }
+        
         dc.resumeGame(players, stacks, playerNext);
         return dc;
 	}
