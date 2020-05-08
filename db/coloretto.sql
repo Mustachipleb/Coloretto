@@ -57,6 +57,18 @@ INSERT INTO `Players` (idPlayer, name, isNext, idGame)
     (3, 'Fons', 0, 0),
     (4, 'Glen', 0, 0);
 
+CREATE TABLE IF NOT EXISTS `Coloretto`.`Highscores` (
+	`name` VARCHAR(45) NOT NULL,
+    `score` INT NOT NULL)
+ENGINE = InnoDB;
+
+INSERT INTO `Highscores` (name, score)
+	VALUES('Nicolas', 30),
+    ('Nicolas', 40),
+    ('Fons', 35),
+    ('Johannes', 20),
+    ('Glen', 32);
+
 -- -----------------------------------------------------
 -- Table `Coloretto`.`Player/Card`
 -- -----------------------------------------------------

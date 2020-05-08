@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import domein.DomeinController;
 import domein.Kaart;
@@ -20,32 +18,6 @@ import domein.Stapel;
 public class GameMapper
 {
 	private static ConnectionManager manager = new ConnectionManager();
-	
-	public static void addGame(Spel spel)
-	{
-		try(Connection conn = manager.getConnection())
-		{
-            PreparedStatement queryNieuweGebruiker = conn.prepareStatement("INSERT INTO players(idPlayer) VALUES (?, ?)");
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public static void removeGame(Spel spel)
-	{
-		try(Connection conn = manager.getConnection())
-		{
-            PreparedStatement queryNieuweGebruiker = conn.prepareStatement("INSERT INTO players(idPlayer) VALUES (?, ?)");
-		}
-		catch (SQLException e)
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
 	
 	public static DomeinController retrieveGame(int gameId) throws SQLException
 	{
@@ -112,5 +84,23 @@ public class GameMapper
         
         dc.resumeGame(players, stacks, playerNext);
         return dc;
+	}
+	
+	public static Map<String, Integer> retrieveHighScores() throws SQLException
+	{
+		Connection conn = manager.getConnection();
+		Map<String, Integer> highScores = new HashMap<String, Integer>();
+		
+        PreparedStatement query = conn.prepareStatement(
+        		"SELECT name, score FROM `Highscores` "
+        		+ "ORDER BY score DESC "
+        		+ "LIMIT 10");
+        ResultSet rs = query.executeQuery();
+        while (rs.next())
+        {
+        	highScores.put(rs.getString(1), rs.getInt(2));
+        }
+        
+        return highScores;
 	}
 }
