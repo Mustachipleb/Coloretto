@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import domein.DomeinController;
 import domein.Kaart;
@@ -91,5 +89,23 @@ public class GameMapper
         
         dc.resumeGame(players, stacks, playerNext);
         return dc;
+	}
+	
+	public static Map<String, Integer> retrieveHighScores() throws SQLException
+	{
+		Connection conn = manager.getConnection();
+		Map<String, Integer> highScores = new HashMap<String, Integer>();
+		
+        PreparedStatement query = conn.prepareStatement(
+        		"SELECT name, score FROM `Highscores` "
+        		+ "ORDER BY score DESC "
+        		+ "LIMIT 10");
+        ResultSet rs = query.executeQuery();
+        while (rs.next())
+        {
+        	highScores.put(rs.getString(1), rs.getInt(2));
+        }
+        
+        return highScores;
 	}
 }
