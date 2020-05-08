@@ -75,7 +75,7 @@ public class SpelScherm extends GridPane
 				
 				ChoiceDialog<String> dialog = new ChoiceDialog<>("Blauw", choices);
 				dialog.setTitle("Einde Spel");
-				dialog.setHeaderText(String.format("%s, welke kleur wil je dat Ã©Ã©n van je jokers wordt?", speler.getNaam()));
+				dialog.setHeaderText(String.format("%s, welke kleur wil je dat één van je jokers wordt?", speler.getNaam()));
 				dialog.setContentText(null);
 
 				Optional<String> result = dialog.showAndWait();
@@ -200,7 +200,7 @@ public class SpelScherm extends GridPane
 	
 	private void initialise()
 	{
-		for (int i = 0; i < dc.getHuidigeRonde().getStapels().size(); i++)
+		try
 		{
 			cards.put("back", new Image(getClass().getResourceAsStream("/images/kaart-back.png")));
 			cards.put("+2", new Image(getClass().getResourceAsStream("/images/kaart-+2.png")));
